@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Movie {
+public class MovieDto {
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")

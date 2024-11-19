@@ -9,11 +9,11 @@ import java.util.UUID;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, UUID> {
-    Movie findMovieByMovieShedUserIdAndTitle(UUID movieShedUserId,String title);
+    Movie findMovieByMovieShedUserIdAndTitle(UUID movieShedUserId, String title);
 
-    Movie findMovieByMovieShedUserEmailAndTitle(String movieShedUserEmail,String title);
+    Movie findMovieByMovieShedUserEmailAndTitle(String movieShedUserEmail, String title);
 
-    Movie findMovieByMovieShedUserUserNameAndTitle(String movieShedUserUserName,String title);
+    Movie findMovieByMovieShedUserUserNameAndTitle(String movieShedUserUserName, String title);
 
     List<Movie> findMoviesByMovieShedUserEmail(String userEmail);
 
@@ -21,4 +21,5 @@ public interface MovieRepository extends JpaRepository<Movie, UUID> {
 
     List<Movie> findMoviesByMovieShedUserId(UUID movieShedUserId);
 
+    List<Movie> findMoviesByMovieShedUserIdAndWatched(UUID movieShedUserId, boolean watched);
 }

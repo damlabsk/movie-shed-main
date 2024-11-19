@@ -1,13 +1,15 @@
 package com.movieshed.model;
 
-import com.movieshed.MovieShedApplication;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.engine.internal.Cascade;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,6 +30,16 @@ public class MovieShedUser extends EntityBase {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "movieShedUser")
     private List<Movie> movies = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "friend_id")
+    private List<MovieShedUser> friends = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "friend_of_id")
+    private List<MovieShedUser> friendOfs = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movieShedUser")
+    private List<Comment> comments = new ArrayList<>();
 
 }
 

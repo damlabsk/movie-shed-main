@@ -1,6 +1,5 @@
 package com.movieshed.client;
 
-import com.movieshed.model.dto.Movie;
 import com.movieshed.model.dto.MovieResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
