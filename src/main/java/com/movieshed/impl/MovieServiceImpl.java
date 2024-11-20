@@ -58,6 +58,8 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findMoviesByMovieShedUserId(id);
     }
 
+
+
     @Override
     public List<Movie> findMoviesByUserName(String userName) {
         return movieRepository.findMoviesByMovieShedUserUserName(userName);

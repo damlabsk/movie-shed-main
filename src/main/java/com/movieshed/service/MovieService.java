@@ -11,9 +11,9 @@ public interface MovieService {
 
     Movie setMovieStatus(UUID movieId, boolean watched);
 
-    List<Movie> findMoviesByUserId(UUID id);
-
     List<Movie> findMoviesByUserName(String userName);
+
+    List<Movie> findMoviesByUserId(UUID id);
 
     List<Movie> findMoviesByUserEmail(String email);
     List<Movie> findWatchedMoviesByUserId(UUID userId);
