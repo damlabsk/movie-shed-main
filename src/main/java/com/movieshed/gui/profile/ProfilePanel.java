@@ -26,19 +26,82 @@ public class ProfilePanel extends JPanel {
     public ProfilePanel(RegisterPanel registerPanel) {
         this.registerPanel = registerPanel;
         setLayout(new BorderLayout());
+        setBackground(Color.BLACK);
 
-        userNameLabel = new JLabel("User: " + getCurrentUserName(), JLabel.LEFT);
-        userNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(Color.BLACK);
+
+
+        JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        userPanel.setBackground(Color.BLACK);
+
+        userNameLabel = new JLabel(getCurrentUserName());
+        userNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        userNameLabel.setForeground(Color.WHITE);
+
+        JButton movieDiaryButton = new JButton("Movie Diary");
+        movieDiaryButton.setFont(new Font("Arial", Font.BOLD, 14));
+        movieDiaryButton.setBackground(Color.DARK_GRAY);
+        movieDiaryButton.setForeground(Color.WHITE);
+
+        userPanel.add(userNameLabel);
+        userPanel.add(movieDiaryButton);
+        
+        JPanel addFriendsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        addFriendsPanel.setBackground(Color.BLACK);
+
+        JTextField addFriendsField = new JTextField(15);
+        addFriendsField.setFont(new Font("Arial", Font.PLAIN, 14));
+        addFriendsField.setBackground(Color.DARK_GRAY);
+        addFriendsField.setForeground(Color.WHITE);
+
+        JButton addFriendsButton = new JButton("Add friends");
+        addFriendsButton.setFont(new Font("Arial", Font.BOLD, 14));
+        addFriendsButton.setBackground(Color.DARK_GRAY);
+        addFriendsButton.setForeground(Color.WHITE);
+
+        addFriendsPanel.add(addFriendsField);
+        addFriendsPanel.add(addFriendsButton);
+
+
+        JButton showFriendsActivityButton = new JButton("Show friends activity");
+        showFriendsActivityButton.setFont(new Font("Arial", Font.BOLD, 14));
+        showFriendsActivityButton.setBackground(Color.DARK_GRAY);
+        showFriendsActivityButton.setForeground(Color.WHITE);
+
+
+        JPanel controlsPanel = new JPanel(new BorderLayout());
+        controlsPanel.setBackground(Color.BLACK);
+
+        controlsPanel.add(addFriendsPanel, BorderLayout.NORTH);
+        controlsPanel.add(showFriendsActivityButton, BorderLayout.SOUTH);
+
+        topPanel.add(userPanel, BorderLayout.WEST);
+        topPanel.add(controlsPanel, BorderLayout.EAST);
+
+        JLabel watchlistLabel = new JLabel("Watchlist");
+        watchlistLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        watchlistLabel.setForeground(Color.WHITE);
+        watchlistLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        JPanel watchlistPanel = new JPanel(new BorderLayout());
+        watchlistPanel.setBackground(Color.BLACK);
 
         watchlistModel = new DefaultListModel<>();
         watchlist = new JList<>(watchlistModel);
         watchlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        watchlist.setBackground(Color.DARK_GRAY);
+        watchlist.setForeground(Color.WHITE);
+        watchlist.setFont(new Font("Arial", Font.PLAIN, 14));
+
         JScrollPane watchlistScroll = new JScrollPane(watchlist);
+        watchlistPanel.add(watchlistLabel, BorderLayout.NORTH);
+        watchlistPanel.add(watchlistScroll, BorderLayout.CENTER);
 
 
-        add(userNameLabel, BorderLayout.NORTH);
-        add(watchlistScroll, BorderLayout.CENTER);
+        add(topPanel, BorderLayout.NORTH);
+        add(watchlistPanel, BorderLayout.CENTER);
 
         loadWatchlist();
     }
@@ -60,4 +123,3 @@ public class ProfilePanel extends JPanel {
         }
     }
 }
-
