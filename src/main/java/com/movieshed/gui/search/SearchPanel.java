@@ -1,9 +1,12 @@
 package com.movieshed.gui.search;
 
 import com.movieshed.client.OmdbClient;
+import com.movieshed.gui.MainFrame;
+import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.dto.MovieDto;
 import com.movieshed.model.dto.MovieResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -22,8 +25,15 @@ public class SearchPanel extends JPanel {
     private JButton searchButton;
     private JPanel resultsPanel;
 
+    @Lazy
+    @Autowired
+    private MainFrame mainFrame;
+
     @Autowired
     private OmdbClient omdbClient;
+
+    @Autowired
+    private MovieInfoPanel movieInfoPanel;
 
     public SearchPanel() {
         setLayout(new BorderLayout());
@@ -104,15 +114,18 @@ public class SearchPanel extends JPanel {
         JLabel titleLabel = new JLabel("<html><center>" + movieDto.getTitle() + "</center></html>", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
-        JButton watchListButton = new JButton("Add To WatchList");
-        watchListButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, movieDto.getTitle() + " added to WatchList!");
-            // TODO: Open the different panel if needed
+        JButton infoButton = new JButton("View Info");
+        infoButton.addActionListener(e -> {
+            showMovieInfoPanel(movieDto);
         });
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1,1));
+        buttonPanel.add(infoButton);
 
         panel.add(posterLabel, BorderLayout.NORTH);
         panel.add(titleLabel, BorderLayout.CENTER);
-        panel.add(watchListButton, BorderLayout.SOUTH);
+        //panel.add(watchListButton, BorderLayout.SOUTH);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
@@ -145,5 +158,13 @@ public class SearchPanel extends JPanel {
                 });
             }
         }).start();
+    }
+
+    public void showMovieInfoPanel(MovieDto movieDto) {
+
+        movieInfoPanel.displayMovieInfo(movieDto);
+
+        mainFrame.showMovieInfoPanel(movieDto);
+
     }
 }

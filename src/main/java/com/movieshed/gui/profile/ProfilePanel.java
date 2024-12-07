@@ -125,7 +125,7 @@ public class ProfilePanel extends JPanel {
         }
     }
 
-    private void openMovieDiaryPanel() {
+    public void openMovieDiaryPanel() {
         RegisterPanel registerPanel = new RegisterPanel();
         MovieDiaryPanel movieDiaryPanel = new MovieDiaryPanel(registerPanel);
 

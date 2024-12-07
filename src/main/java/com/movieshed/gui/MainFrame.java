@@ -1,8 +1,10 @@
 package com.movieshed.gui;
 
+import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.gui.profile.ProfilePanel;
 import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.gui.search.SearchPanel;
+import com.movieshed.model.dto.MovieDto;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,9 @@ public class MainFrame extends JFrame {
     private SearchPanel searchPanel;
 
     @Autowired
+    private MovieInfoPanel movieInfoPanel;
+
+    @Autowired
     private ProfilePanel profilePanel;
 
     public MainFrame() {
@@ -50,6 +55,7 @@ public class MainFrame extends JFrame {
         contentArea.add(dashboardPanel, "dashboardPanel");
         contentArea.add(searchPanel, "searchPanel");
         contentArea.add(profilePanel, "profilePanel");
+        contentArea.add(movieInfoPanel, "movieInfoPanel");
 
         registerPanel.setOnRegisterSuccess(this::onRegisterSuccess);
 
@@ -98,6 +104,11 @@ public class MainFrame extends JFrame {
 
     public void showProfilePanel() {
         cardLayout.show(contentArea, "profilePanel");
+    }
+
+    public void showMovieInfoPanel(MovieDto movieDto) {
+        movieInfoPanel.displayMovieInfo(movieDto);
+        cardLayout.show(contentArea, "movieInfoPanel");
     }
 
     public void showRegisterPanel() {
