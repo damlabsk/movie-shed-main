@@ -19,7 +19,7 @@ public class RegisterPanel extends JPanel {
     private JLabel passwordLabel;
     private JLabel emailLabel;
     public JTextField userNameField;
-    private JTextField passwordField;
+    private JPasswordField passwordField;
     private JTextField emailField;
     private JButton registerButton;
 
@@ -32,42 +32,118 @@ public class RegisterPanel extends JPanel {
     @Getter
     private MovieShedUser currentUser;
 
-    private GridLayout gridLayout = new GridLayout(4, 2);
+    //private GridLayout gridLayout = new GridLayout(4, 2);
 
     public RegisterPanel() {
-        this.setLayout(gridLayout);
-        userNameLabel = new JLabel("Username:", JLabel.CENTER);
-        passwordLabel = new JLabel("Password:", JLabel.CENTER);
-        emailLabel = new JLabel("Email:", JLabel.CENTER);
-        userNameField = new JTextField();
-        passwordField = new JTextField();
-        emailField = new JTextField();
-        registerButton = new JButton("Register");
+        //this.setLayout(gridLayout);
+        this.setLayout(null);
+        this.setBackground(Color.BLACK);
 
-        add(userNameLabel);
-        add(userNameField);
-        add(passwordLabel);
-        add(passwordField);
-        add(emailLabel);
-        add(emailField);
-        add(registerButton);
+        int panelWidth = 800;
+        int panelHeight = 600;
+
+        int formWidth = 300;
+        int formHeight = 250;
+        int startX = (panelWidth - formWidth) / 2;
+        int startY = (panelHeight - formHeight) / 2;
+
+        JLabel ms = new JLabel("<html><span style='color:white;'>Welcome to movie</span><span style='color:red;'>SHED</span></html>");
+        ms.setFont(new Font("Arial", Font.PLAIN, 24));
+        ms.setHorizontalAlignment(SwingConstants.CENTER);
+        ms.setBounds(startX, startY - 100, formWidth, 34);
+        this.add(ms);
+
+        JLabel titleLabel  = new JLabel("LOG IN");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setBounds(startX, startY - 40, formWidth, 30);
+        this.add(titleLabel);
+
+        userNameLabel = createStyledLabel("Username");
+        userNameLabel.setBounds(startX, startY, formWidth, 20);
+        userNameField = new JTextField();
+        userNameField.setBounds(startX, startY + 25, formWidth, 20);
+        this.add(userNameLabel);
+        this.add(userNameField);
+
+        passwordLabel = createStyledLabel("Password:");
+        passwordLabel.setBounds(startX, startY + 65, formWidth, 20);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(startX, startY + 90, formWidth, 20);
+        this.add(passwordLabel);
+        this.add(passwordField);
+
+        emailLabel = createStyledLabel("Email:");
+        emailLabel.setBounds(startX, startY + 130, formWidth, 20);
+        emailField = new JPasswordField();
+        emailField.setBounds(startX, startY + 155, formWidth, 20);
+        this.add(emailLabel);
+        this.add(emailField);
+
+        //userNameLabel = new JLabel("Username:", JLabel.CENTER);
+        //passwordLabel = new JLabel("Password:", JLabel.CENTER);
+        //emailLabel = new JLabel("Email:", JLabel.CENTER);
+        //userNameField = new JTextField();
+        //passwordField = new JTextField();
+        //emailField = new JTextField();
+        registerButton = new JButton("Register");
+        registerButton.setBounds(startX + (formWidth - 100) / 2, startY + 190, 100, 30);
+        registerButton.setBackground(Color.LIGHT_GRAY);
+        registerButton.setFocusPainted(false);
+        registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        this.add(registerButton);
+
+        //add(userNameLabel);
+        //add(userNameField);
+        //add(passwordLabel);
+        //add(passwordField);
+        //add(emailLabel);
+        //add(emailField);
+        //add(registerButton);
 
         registerButton.addActionListener(e -> handleRegisterButtonClick());
     }
 
     public void handleRegisterButtonClick() {
-        String userName = userNameField.getText();
-        String password = passwordField.getText();
-        String email = emailField.getText();
+        String userName = userNameField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
+        String email = emailField.getText().trim();
 
-        MovieShedUser user = userService.createMovieShedUser(userName, password, email);
-        log.info("User successfully saved: {}", user);
+        if (userName.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        onRegisterSuccess.run();
+        try {
+            MovieShedUser user = userService.createMovieShedUser(userName, password, email);
+            log.info("User successfully saved: {}", user);
+            currentUser = user;
+
+            if(onRegisterSuccess != null) {
+                onRegisterSuccess.run();
+            }
+        } catch (Exception ex) {
+            log.error("Failed to register user", ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Failed to log in. Please try again", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public void clearFields() {
+        userNameField.setText("");
+        passwordField.setText("");
+        emailField.setText("");
     }
 
     public String getUserName() {
         return userNameField.getText();
     }
 
+    private JLabel createStyledLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setForeground(Color.WHITE);
+        label.setFont(new Font("Arial", Font.PLAIN, 12));
+        return label;
+    }
 }
