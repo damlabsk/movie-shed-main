@@ -146,4 +146,14 @@ public class RegisterPanel extends JPanel {
         label.setFont(new Font("Arial", Font.PLAIN, 12));
         return label;
     }
+    public void setCurrentUser(MovieShedUser user) {
+        this.currentUser = user;
+    }
+
+    public MovieShedUser getCurrentUser() {
+        return currentUser;
+    }
+    public void registerUser(String username, String password) {
+        currentUser = new MovieShedUser();
+    }
 }

@@ -45,6 +45,8 @@ public class ProfilePanel extends JPanel {
         movieDiaryButton.setBackground(Color.WHITE);
         movieDiaryButton.setForeground(Color.BLACK);
 
+        movieDiaryButton.addActionListener(e -> openMovieDiaryPanel());
+
         userPanel.add(userNameLabel);
         userPanel.add(movieDiaryButton);
 
@@ -121,5 +123,16 @@ public class ProfilePanel extends JPanel {
                 watchlistModel.addElement(movie);
             }
         }
+    }
+
+    private void openMovieDiaryPanel() {
+        RegisterPanel registerPanel = new RegisterPanel();
+        MovieDiaryPanel movieDiaryPanel = new MovieDiaryPanel(registerPanel);
+
+        JFrame movieDiaryFrame = new JFrame("Movie Diary");
+        movieDiaryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        movieDiaryFrame.setSize(600, 400);
+        movieDiaryFrame.add(movieDiaryPanel);
+        movieDiaryFrame.setVisible(true);
     }
 }
