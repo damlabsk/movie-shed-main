@@ -42,24 +42,24 @@ public class ProfilePanel extends JPanel {
 
         JButton movieDiaryButton = new JButton("Movie Diary");
         movieDiaryButton.setFont(new Font("Arial", Font.BOLD, 14));
-        movieDiaryButton.setBackground(Color.DARK_GRAY);
-        movieDiaryButton.setForeground(Color.WHITE);
+        movieDiaryButton.setBackground(Color.WHITE);
+        movieDiaryButton.setForeground(Color.BLACK);
 
         userPanel.add(userNameLabel);
         userPanel.add(movieDiaryButton);
-        
+
         JPanel addFriendsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         addFriendsPanel.setBackground(Color.BLACK);
 
         JTextField addFriendsField = new JTextField(15);
         addFriendsField.setFont(new Font("Arial", Font.PLAIN, 14));
-        addFriendsField.setBackground(Color.DARK_GRAY);
+        addFriendsField.setBackground(Color.BLACK);
         addFriendsField.setForeground(Color.WHITE);
 
         JButton addFriendsButton = new JButton("Add friends");
         addFriendsButton.setFont(new Font("Arial", Font.BOLD, 14));
-        addFriendsButton.setBackground(Color.DARK_GRAY);
-        addFriendsButton.setForeground(Color.WHITE);
+        addFriendsButton.setBackground(Color.WHITE);
+        addFriendsButton.setForeground(Color.BLACK);
 
         addFriendsPanel.add(addFriendsField);
         addFriendsPanel.add(addFriendsButton);
@@ -67,8 +67,8 @@ public class ProfilePanel extends JPanel {
 
         JButton showFriendsActivityButton = new JButton("Show friends activity");
         showFriendsActivityButton.setFont(new Font("Arial", Font.BOLD, 14));
-        showFriendsActivityButton.setBackground(Color.DARK_GRAY);
-        showFriendsActivityButton.setForeground(Color.WHITE);
+        showFriendsActivityButton.setBackground(Color.WHITE);
+        showFriendsActivityButton.setForeground(Color.BLACK);
 
 
         JPanel controlsPanel = new JPanel(new BorderLayout());
@@ -91,7 +91,7 @@ public class ProfilePanel extends JPanel {
         watchlistModel = new DefaultListModel<>();
         watchlist = new JList<>(watchlistModel);
         watchlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        watchlist.setBackground(Color.DARK_GRAY);
+        watchlist.setBackground(Color.BLACK);
         watchlist.setForeground(Color.WHITE);
         watchlist.setFont(new Font("Arial", Font.PLAIN, 14));
 
