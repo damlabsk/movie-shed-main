@@ -1,8 +1,10 @@
 package com.movieshed.gui;
 
+import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.dto.MovieDto;
 import com.movieshed.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -21,6 +23,13 @@ public class DashboardPanel extends JPanel {
     private final MovieService movieService;
     private JPanel resultsPanel;
     private JScrollPane scrollPane;
+
+    @Autowired
+    private MovieInfoPanel movieInfoPanel;
+
+    @Lazy
+    @Autowired
+    private MainFrame mainFrame;
 
     @Autowired
     public DashboardPanel(MovieService movieService) {
@@ -117,7 +126,7 @@ public class DashboardPanel extends JPanel {
         infoButton.setFocusable(false);
         infoButton.setForeground(Color.BLACK);
         infoButton.addActionListener(e -> {
-            //showMovieInfoPanel(movieDto);
+            showMovieInfoPanel(movieDto);
         });
 
         JPanel buttonPanel = new JPanel(new GridLayout(1,1));
@@ -159,6 +168,13 @@ public class DashboardPanel extends JPanel {
                 });
             }
         }).start();
+    }
+    public void showMovieInfoPanel(MovieDto movieDto) {
+
+        movieInfoPanel.displayMovieInfo(movieDto);
+
+        mainFrame.showMovieInfoPanel(movieDto);
+
     }
     
 }
