@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class DashboardPanel extends JPanel {
@@ -27,7 +28,7 @@ public class DashboardPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
-        JLabel logoLabel = new JLabel("movieSHED");
+        JLabel logoLabel = new JLabel("<html><span style='color:white;'>Welcome to movie</span><span style='color:red;'>SHED</span></html>");
         logoLabel.setFont(new Font("Arial", Font.BOLD, 24));
         logoLabel.setForeground(Color.WHITE);
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -50,15 +51,26 @@ public class DashboardPanel extends JPanel {
     }
     private List<MovieDto> createPopularMovies(MovieService movieService) {
         List<String> popularTitles = List.of("Joker", "Barbie", "Oppenheimer", "The Godfather",
-                "The Truman Show", "The Green Mile", "Pulp Fiction", "Forrest Gump");
-        List<MovieDto> popularMovies = new ArrayList<>();
+                "The Truman Show", "The Green Mile", "Pulp Fiction", "Forrest Gump","Ice Age","The Cars","Avatar","Titanic","Avengers","The Lion King","Frozen","The Dark Knight","Fight Club","Spirited Away","The Pianist","Parasite","Whiplash","Leon","The Prestige","Casablanca","Memento");
 
-        for (String title : popularTitles) {
-            List<MovieDto> searchResults = movieService.searchMovieByKey(title);
-            if (!searchResults.isEmpty()) {
-                popularMovies.add(searchResults.get(0));
+        List<MovieDto> popularMovies = new ArrayList<>();
+        List<String> selectedTitles = new ArrayList<>();
+        Random rand = new Random();
+
+        while (selectedTitles.size() < 12 && selectedTitles.size() < popularTitles.size()) {
+            int randIndex = rand.nextInt(popularTitles.size());
+            String randomTitle = popularTitles.get(randIndex);
+
+            if (!selectedTitles.contains(randomTitle)) {
+                selectedTitles.add(randomTitle);
+
+                List<MovieDto> searchResults = movieService.searchMovieByKey(randomTitle);
+                if (!searchResults.isEmpty()) {
+                    popularMovies.add(searchResults.get(0));
+                }
             }
         }
+
         return popularMovies;
     }
     private void displaySearchResults(List<MovieDto> movieDtos) {
