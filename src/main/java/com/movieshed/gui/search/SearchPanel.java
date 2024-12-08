@@ -39,6 +39,7 @@ public class SearchPanel extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel searchPanel = new JPanel(new BorderLayout(5, 5));
+        searchPanel.setBackground(Color.BLACK);
 
         searchLabel = new JLabel("Search:");
         searchField = new JTextField();
@@ -105,6 +106,7 @@ public class SearchPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(5, 5));
         panel.setPreferredSize(new Dimension(180, 300));
+        panel.setBackground(Color.BLACK);
 
         JLabel posterLabel = new JLabel("Loading...", SwingConstants.CENTER);
         posterLabel.setPreferredSize(new Dimension(150, 225));
@@ -115,11 +117,15 @@ public class SearchPanel extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
 
         JButton infoButton = new JButton("View Info");
+        infoButton.setBackground(Color.DARK_GRAY);
+        infoButton.setFocusable(false);
+        infoButton.setForeground(Color.WHITE);
         infoButton.addActionListener(e -> {
             showMovieInfoPanel(movieDto);
         });
 
         JPanel buttonPanel = new JPanel(new GridLayout(1,1));
+        buttonPanel.setBackground(Color.BLACK);
         buttonPanel.add(infoButton);
 
         panel.add(posterLabel, BorderLayout.NORTH);

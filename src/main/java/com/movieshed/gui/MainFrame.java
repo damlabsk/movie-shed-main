@@ -66,17 +66,36 @@ public class MainFrame extends JFrame {
 
     private JPanel createToolbar() {
         JPanel toolbarPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        toolbarPanel.setBackground(Color.BLACK);
 
         JButton dashboardButton = new JButton("Dashboard");
+        dashboardButton.setBackground(new Color(128, 128, 128));
+        dashboardButton.setForeground(Color.WHITE);
+        dashboardButton.setFocusable(Boolean.FALSE);
         dashboardButton.addActionListener(e -> showDashboardPanel());
 
         JButton searchButton = new JButton("Search");
+        searchButton.setBackground(new Color(128, 128, 128));
+        searchButton.setForeground(Color.WHITE);
+        searchButton.setFocusable(Boolean.FALSE);
         searchButton.addActionListener(e -> showSearchPanel());
 
         JButton profileButton = new JButton("Profile");
+        profileButton.setBackground(new Color(128, 128, 128));
+        profileButton.setForeground(Color.WHITE);
+        profileButton.setFocusable(Boolean.FALSE);
         profileButton.addActionListener(e -> showProfilePanel());
 
+        JButton friendsButton = new JButton("Friends");
+        friendsButton.setBackground(new Color(128, 128, 128));
+        friendsButton.setForeground(Color.WHITE);
+        friendsButton.setFocusable(Boolean.FALSE);
+        friendsButton.addActionListener(e -> showFriendsPanel());
+
         JButton logoutButton = new JButton("Logout");
+        logoutButton.setBackground(new Color(128, 128, 128));
+        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setFocusable(Boolean.FALSE);
         logoutButton.addActionListener(e -> logout());
 
         toolbarPanel.add(dashboardButton);
@@ -110,6 +129,8 @@ public class MainFrame extends JFrame {
         movieInfoPanel.displayMovieInfo(movieDto);
         cardLayout.show(contentArea, "movieInfoPanel");
     }
+
+    public void showFriendsPanel() {}
 
     public void showRegisterPanel() {
         cardLayout.show(contentArea, "registerPanel");

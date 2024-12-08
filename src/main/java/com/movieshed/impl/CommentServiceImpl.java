@@ -50,4 +50,8 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> getComments(UUID movieId) {
         return commentRepository.findCommentsByMovieId(movieId);
     }
+
+    public List<Comment> getCommentsByTitle(String title) {
+        return commentRepository.findCommentsByMovieTitle(title);
+    }
 }
