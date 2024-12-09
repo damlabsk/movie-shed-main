@@ -37,27 +37,36 @@ public class SearchPanel extends JPanel {
 
     public SearchPanel() {
         setLayout(new BorderLayout());
+        setBackground(Color.BLACK);
 
         JPanel searchPanel = new JPanel(new BorderLayout(5, 5));
         searchPanel.setBackground(Color.BLACK);
 
         searchLabel = new JLabel("Search:");
+        searchLabel.setForeground(Color.WHITE);
         searchField = new JTextField();
         searchButton = new JButton("Search");
 
         searchField.setPreferredSize(new Dimension(400, 25));
+        searchField.setBackground(Color.WHITE);
+        searchField.setForeground(Color.BLACK);
 
         JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
+        inputPanel.setBackground(Color.BLACK);
         inputPanel.add(searchLabel, BorderLayout.WEST);
         inputPanel.add(searchField, BorderLayout.CENTER);
 
         searchPanel.add(inputPanel, BorderLayout.CENTER);
         searchPanel.add(searchButton, BorderLayout.EAST);
 
+        searchButton.setBackground(Color.WHITE);
+        searchButton.setForeground(Color.BLACK);
+        searchButton.setFocusable(false);
+
         this.add(searchPanel, BorderLayout.NORTH);
 
         resultsPanel = new JPanel(new GridBagLayout());
-
+        resultsPanel.setBackground(Color.BLACK);
         JScrollPane scrollPane = new JScrollPane(resultsPanel);
         this.add(scrollPane, BorderLayout.CENTER);
 
@@ -110,16 +119,18 @@ public class SearchPanel extends JPanel {
 
         JLabel posterLabel = new JLabel("Loading...", SwingConstants.CENTER);
         posterLabel.setPreferredSize(new Dimension(150, 225));
+        posterLabel.setForeground(Color.WHITE);
 
         loadPosterImage(movieDto.getPoster(), posterLabel);
 
         JLabel titleLabel = new JLabel("<html><center>" + movieDto.getTitle() + "</center></html>", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        titleLabel.setForeground(Color.WHITE);
 
         JButton infoButton = new JButton("View Info");
-        infoButton.setBackground(Color.DARK_GRAY);
+        infoButton.setBackground(Color.WHITE);
+        infoButton.setForeground(Color.BLACK);
         infoButton.setFocusable(false);
-        infoButton.setForeground(Color.WHITE);
         infoButton.addActionListener(e -> {
             showMovieInfoPanel(movieDto);
         });

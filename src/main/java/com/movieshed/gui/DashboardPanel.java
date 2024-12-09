@@ -48,12 +48,8 @@ public class DashboardPanel extends JPanel {
         resultsPanel = new JPanel(new GridBagLayout());
         resultsPanel.setBackground(Color.BLACK);
 
-        scrollPane = new JScrollPane(resultsPanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.setBorder(null);
-        add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(resultsPanel);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         List<MovieDto> popularMovies = createPopularMovies(movieService);
         displaySearchResults(popularMovies);
