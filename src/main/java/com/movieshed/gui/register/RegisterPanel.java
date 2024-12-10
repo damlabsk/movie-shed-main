@@ -76,7 +76,7 @@ public class RegisterPanel extends JPanel {
 
         emailLabel = createStyledLabel("Email:");
         emailLabel.setBounds(startX, startY + 130, formWidth, 20);
-        emailField = new JPasswordField();
+        emailField = new JTextField();
         emailField.setBounds(startX, startY + 155, formWidth, 20);
         this.add(emailLabel);
         this.add(emailField);
