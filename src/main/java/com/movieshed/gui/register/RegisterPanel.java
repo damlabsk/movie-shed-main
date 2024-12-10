@@ -1,8 +1,8 @@
 package com.movieshed.gui.register;
 
+import com.movieshed.UserContext;
 import com.movieshed.model.MovieShedUser;
 import com.movieshed.service.MovieShedUserService;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,7 @@ public class RegisterPanel extends JPanel {
     @Autowired
     private MovieShedUserService userService;
 
-    @Getter
-    private MovieShedUser currentUser;
-
-    //private GridLayout gridLayout = new GridLayout(4, 2);
-
     public RegisterPanel() {
-        //this.setLayout(gridLayout);
         this.setLayout(null);
         this.setBackground(Color.BLACK);
 
@@ -53,7 +47,7 @@ public class RegisterPanel extends JPanel {
         ms.setBounds(startX, startY - 100, formWidth, 34);
         this.add(ms);
 
-        JLabel titleLabel  = new JLabel("LOG IN");
+        JLabel titleLabel = new JLabel("LOG IN");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,26 +75,12 @@ public class RegisterPanel extends JPanel {
         this.add(emailLabel);
         this.add(emailField);
 
-        //userNameLabel = new JLabel("Username:", JLabel.CENTER);
-        //passwordLabel = new JLabel("Password:", JLabel.CENTER);
-        //emailLabel = new JLabel("Email:", JLabel.CENTER);
-        //userNameField = new JTextField();
-        //passwordField = new JTextField();
-        //emailField = new JTextField();
         registerButton = new JButton("Register");
         registerButton.setBounds(startX + (formWidth - 100) / 2, startY + 190, 100, 30);
         registerButton.setBackground(Color.LIGHT_GRAY);
         registerButton.setFocusPainted(false);
         registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
         this.add(registerButton);
-
-        //add(userNameLabel);
-        //add(userNameField);
-        //add(passwordLabel);
-        //add(passwordField);
-        //add(emailLabel);
-        //add(emailField);
-        //add(registerButton);
 
         registerButton.addActionListener(e -> handleRegisterButtonClick());
     }
@@ -117,17 +97,15 @@ public class RegisterPanel extends JPanel {
 
         try {
             MovieShedUser user = userService.createMovieShedUser(userName, password, email);
-            log.info("User successfully saved: {}", user);
-            currentUser = user;
+            UserContext.setUser(user);
 
-            if(onRegisterSuccess != null) {
+            if (onRegisterSuccess != null) {
                 onRegisterSuccess.run();
             }
         } catch (Exception ex) {
             log.error("Failed to register user", ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, "Failed to log in. Please try again", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public void clearFields() {
@@ -145,15 +123,5 @@ public class RegisterPanel extends JPanel {
         label.setForeground(Color.WHITE);
         label.setFont(new Font("Arial", Font.PLAIN, 12));
         return label;
-    }
-    public void setCurrentUser(MovieShedUser user) {
-        this.currentUser = user;
-    }
-
-    public MovieShedUser getCurrentUser() {
-        return currentUser;
-    }
-    public void registerUser(String username, String password) {
-        currentUser = new MovieShedUser();
     }
 }

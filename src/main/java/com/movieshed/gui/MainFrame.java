@@ -1,6 +1,7 @@
 package com.movieshed.gui;
 
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
+import com.movieshed.gui.profile.MovieDiaryPanel;
 import com.movieshed.gui.profile.ProfilePanel;
 import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.gui.search.SearchPanel;
@@ -33,6 +34,9 @@ public class MainFrame extends JFrame {
     private MovieInfoPanel movieInfoPanel;
 
     @Autowired
+    private MovieDiaryPanel movieDiaryPanel;
+
+    @Autowired
     private ProfilePanel profilePanel;
 
     public MainFrame() {
@@ -55,6 +59,7 @@ public class MainFrame extends JFrame {
         contentArea.add(dashboardPanel, "dashboardPanel");
         contentArea.add(searchPanel, "searchPanel");
         contentArea.add(profilePanel, "profilePanel");
+        contentArea.add(movieDiaryPanel, "movieDiaryPanel");
         contentArea.add(movieInfoPanel, "movieInfoPanel");
 
         registerPanel.setOnRegisterSuccess(this::onRegisterSuccess);
@@ -86,6 +91,12 @@ public class MainFrame extends JFrame {
         profileButton.setFocusable(Boolean.FALSE);
         profileButton.addActionListener(e -> showProfilePanel());
 
+        JButton diaryButton = new JButton("Diary");
+        diaryButton.setBackground(new Color(128, 128, 128));
+        diaryButton.setForeground(Color.WHITE);
+        diaryButton.setFocusable(Boolean.FALSE);
+        diaryButton.addActionListener(e -> showDiaryPanel());
+
         JButton friendsButton = new JButton("Friends");
         friendsButton.setBackground(new Color(128, 128, 128));
         friendsButton.setForeground(Color.WHITE);
@@ -101,6 +112,7 @@ public class MainFrame extends JFrame {
         toolbarPanel.add(dashboardButton);
         toolbarPanel.add(searchButton);
         toolbarPanel.add(profileButton);
+        toolbarPanel.add(diaryButton);
         toolbarPanel.add(logoutButton);
 
         return toolbarPanel;
@@ -122,7 +134,13 @@ public class MainFrame extends JFrame {
     }
 
     public void showProfilePanel() {
+        profilePanel.loadWatchlist();
         cardLayout.show(contentArea, "profilePanel");
+    }
+
+    public void showDiaryPanel() {
+        movieDiaryPanel.loadWatchedMovies();
+        cardLayout.show(contentArea, "movieDiaryPanel");
     }
 
     public void showMovieInfoPanel(MovieDto movieDto) {

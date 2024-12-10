@@ -1,20 +1,18 @@
 package com.movieshed.gui.movieInfo;
 
+import com.movieshed.UserContext;
 import com.movieshed.gui.profile.ProfilePanel;
-import com.movieshed.impl.CommentServiceImpl;
-import com.movieshed.impl.MovieDiaryServiceImpl;
-import com.movieshed.impl.MovieServiceImpl;
+import com.movieshed.model.MovieShedUser;
 import com.movieshed.model.dto.MovieDto;
 import com.movieshed.service.CommentService;
-import com.movieshed.model.Comment;
+import com.movieshed.service.MovieDiaryService;
+import com.movieshed.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.List;
-import java.util.UUID;
 
 @Component
 public class MovieInfoPanel extends JPanel {
@@ -23,21 +21,18 @@ public class MovieInfoPanel extends JPanel {
     private JLabel yearLabel;
     private JLabel posterLabel;
     private JButton addMovieButton;
-    private boolean isAdded = false;
     private JPanel commentsPanel;
     private JScrollPane commentsScrollPane;
-
-    @Autowired
-    private CommentServiceImpl commentServiceImpl;
+    private MovieDto currentMovieDto;
 
     @Autowired
     private CommentService commentService;
 
     @Autowired
-    private MovieDiaryServiceImpl movieDiaryServiceImpl;
+    private MovieDiaryService movieDiaryService;
 
     @Autowired
-    private MovieServiceImpl movieServiceImpl;
+    private MovieService movieService;
 
     @Autowired
     private ProfilePanel profilePanel;
@@ -65,19 +60,10 @@ public class MovieInfoPanel extends JPanel {
         addMovieButton.setForeground(Color.WHITE);
         addMovieButton.setBackground(new Color(139, 0, 0));
         addMovieButton.addActionListener(e -> {
-            if(!isAdded) {
-                JOptionPane.showMessageDialog(this, titleLabel.getText() + " added to WatchList!");
-                addMovieButton.setText("+ Add to Movie Dairy");
-                isAdded = true;
-                //movieServiceImpl.addMovieToUser(); //user Id'yi ve movie description'ı nasıl çekeceğimi bulamadım
-            } else {
-                redirectToMovieDairy();
-                addMovieButton.setText("Added to Movie Dairy");
-                addMovieButton.setEnabled(false);
-                //movieServiceImpl.setMovieStatus(); //movie id'yi getimdbId ile çekince string döndürüyo ama metodu kullanmak için UUID lazım
-
-            }
-            // TODO: Open the different panel if needed
+            MovieShedUser user = UserContext.getUser();
+            movieService.addMovieToUser(user.getId(), currentMovieDto.getTitle(), "asdf", currentMovieDto.getYear(), currentMovieDto.getPoster());
+            JOptionPane.showMessageDialog(this, titleLabel.getText() + " added to WatchList!");
+            addMovieButton.setText("+ Add to Movie Dairy");
         });
 
         infoPanel = new JPanel();
@@ -105,6 +91,7 @@ public class MovieInfoPanel extends JPanel {
     }
 
     public void displayMovieInfo(MovieDto movieDto) {
+        currentMovieDto = movieDto;
         titleLabel.setText(movieDto.getTitle());
         yearLabel.setText(" ● " + movieDto.getYear());
         //plotLabel.setText("<html><p style='width: 400px;'>" + movieDto.getType() + "</p></html>");
@@ -127,31 +114,22 @@ public class MovieInfoPanel extends JPanel {
         loadComments(movieDto.getTitle());
     }
 
-    private void loadComments(String movieTitle) { //çalışmadıı
+    private void loadComments(String movieTitle) {
         commentsPanel.removeAll();
-        List<Comment> comments = commentServiceImpl.getCommentsByTitle(movieTitle);
-        if(comments == null && comments.isEmpty()) {
-            JLabel noCommentsLabel = new JLabel("No Comments Found");
-            noCommentsLabel.setForeground(Color.WHITE);
-            commentsPanel.add(noCommentsLabel);
-        } else {
-            for (Comment comment : comments) {
-                JLabel commentLabel = new JLabel("\"<html><p style='color: white;'>\" + comment.getText() + \"</p></html>\"");
-                commentLabel.setFont(new Font("Arial", Font.BOLD, 14));
-                commentsPanel.add(commentLabel);
-                commentsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-            }
-        }
+//        List<Comment> comments = commentService.getCommentsByTitle(movieTitle);
+//        if (comments == null && comments.isEmpty()) {
+//            JLabel noCommentsLabel = new JLabel("No Comments Found");
+//            noCommentsLabel.setForeground(Color.WHITE);
+//            commentsPanel.add(noCommentsLabel);
+//        } else {
+//            for (Comment comment : comments) {
+//                JLabel commentLabel = new JLabel("\"<html><p style='color: white;'>\" + comment.getText() + \"</p></html>\"");
+//                commentLabel.setFont(new Font("Arial", Font.BOLD, 14));
+//                commentsPanel.add(commentLabel);
+//                commentsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+//            }
+//        }
         commentsPanel.revalidate();
         commentsPanel.repaint();
     }
-
-    private void setStatus(MovieDto movieDto) {
-        //movieServiceImpl.setMovieStatus(movieDto., true); //movie id'yi UUID olarak çekemedim yine
-    }
-
-    public void redirectToMovieDairy() {
-        profilePanel.openMovieDiaryPanel();
-    }
-
 }
