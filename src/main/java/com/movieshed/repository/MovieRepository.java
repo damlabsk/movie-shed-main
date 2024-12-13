@@ -11,6 +11,8 @@ import java.util.UUID;
 public interface MovieRepository extends JpaRepository<Movie, UUID> {
     Movie findMovieByMovieShedUserIdAndTitle(UUID movieShedUserId, String title);
 
+    Movie findMovieByMovieShedUserIdAndId(UUID movieShedUserId, UUID movieId);
+
     Movie findMovieByMovieShedUserEmailAndTitle(String movieShedUserEmail, String title);
 
     Movie findMovieByMovieShedUserUserNameAndTitle(String movieShedUserUserName, String title);

@@ -81,6 +81,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie findMovieByUserIdAndMovieId(UUID userId, UUID movieId) {
+        return movieRepository.findMovieByMovieShedUserIdAndId(userId, movieId);
+    }
+
+    @Override
     public Movie findMovieByUserNameAndTitle(String userName, String title) {
         return movieRepository.findMovieByMovieShedUserUserNameAndTitle(userName, title);
     }

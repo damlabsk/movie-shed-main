@@ -20,6 +20,8 @@ public interface MovieService {
 
     Movie findMovieByUserIdAndTitle(UUID id, String title);
 
+    Movie findMovieByUserIdAndMovieId(UUID userId, UUID movieId);
+
     Movie findMovieByUserNameAndTitle(String userName, String title);
 
     Movie findMovieByEmailAndTitle(String email, String title);

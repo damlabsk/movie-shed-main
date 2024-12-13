@@ -7,13 +7,11 @@ import com.movieshed.repository.CommentRepository;
 import com.movieshed.repository.MovieRepository;
 import com.movieshed.repository.MovieShedUserRepository;
 import com.movieshed.service.CommentService;
-import com.movieshed.service.FriendService;
 import com.movieshed.service.MovieService;
 import com.movieshed.service.MovieShedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,11 +45,28 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment addComment(UUID userId, String movieTitle, String text) {
+        Comment comment = new Comment();
+        Movie movie = movieRepository.findMovieByMovieShedUserIdAndTitle(userId, movieTitle);
+        MovieShedUser user = movieShedUserRepository.findById(userId).orElse(null);
+        comment.setMovieShedUser(user);
+        comment.setMovie(movie);
+        comment.setText(text);
+        commentRepository.save(comment);
+        movie.getComments().add(comment);
+        movieRepository.save(movie);
+        user.getComments().add(comment);
+        movieShedUserRepository.save(user);
+        return comment;
+    }
+
+    @Override
     public List<Comment> getComments(UUID movieId) {
         return commentRepository.findCommentsByMovieId(movieId);
     }
 
-    public List<Comment> getCommentsByTitle(String title) {
-        return commentRepository.findCommentsByMovieTitle(title);
+    @Override
+    public List<Comment> getCommentsByMovieTitle(String movieTitle) {
+        return commentRepository.findCommentsByMovieTitle(movieTitle);
     }
 }
