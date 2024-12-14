@@ -4,6 +4,7 @@ import com.movieshed.UserContext;
 import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.model.Movie;
 import com.movieshed.model.MovieShedUser;
+import com.movieshed.service.FriendService;
 import com.movieshed.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,11 @@ public class ProfilePanel extends JPanel {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private FriendService friendService;
+
     private JPanel watchlistEntriesPanel;
+    private JPanel friendsEntriesPanel;
 
     public ProfilePanel(RegisterPanel registerPanel) {
         this.registerPanel = registerPanel;
@@ -96,8 +101,31 @@ public class ProfilePanel extends JPanel {
         watchlistPanel.add(watchlistLabel, BorderLayout.NORTH);
         watchlistPanel.add(watchlistScroll, BorderLayout.CENTER);
 
+        JLabel friendsLabel = new JLabel("Friends");
+        friendsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        friendsLabel.setForeground(Color.WHITE);
+        friendsLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        friendsEntriesPanel = new JPanel();
+        friendsEntriesPanel.setLayout(new BoxLayout(friendsEntriesPanel, BoxLayout.Y_AXIS));
+        friendsEntriesPanel.setBackground(Color.BLACK);
+
+        JScrollPane friendsScroll = new JScrollPane(friendsEntriesPanel);
+        friendsScroll.setBackground(Color.BLACK);
+
+        JPanel friendsPanel = new JPanel(new BorderLayout());
+        friendsPanel.setBackground(Color.BLACK);
+        friendsPanel.add(friendsLabel, BorderLayout.NORTH);
+        friendsPanel.add(friendsScroll, BorderLayout.CENTER);
+
+        JPanel mainCenterPanel = new JPanel();
+        mainCenterPanel.setLayout(new BorderLayout());
+        mainCenterPanel.setBackground(Color.BLACK);
+        mainCenterPanel.add(watchlistPanel, BorderLayout.CENTER);
+        mainCenterPanel.add(friendsPanel, BorderLayout.SOUTH);
+
         add(topPanel, BorderLayout.NORTH);
-        add(watchlistPanel, BorderLayout.CENTER);
+        add(mainCenterPanel, BorderLayout.CENTER);
     }
 
     private String getCurrentUserName() {
@@ -108,6 +136,12 @@ public class ProfilePanel extends JPanel {
         MovieShedUser currentUser = UserContext.getUser();
         List<Movie> userMovies = movieService.findMoviesByUserId(currentUser.getId());
         displayWatchlistMovies(userMovies);
+    }
+
+    public void loadFriends() {
+        MovieShedUser currentUser = UserContext.getUser();
+        List<MovieShedUser> friends = currentUser.getFriends();
+        displayFriends(friends);
     }
 
     private void displayWatchlistMovies(List<Movie> movies) {
@@ -132,6 +166,19 @@ public class ProfilePanel extends JPanel {
 
         watchlistEntriesPanel.revalidate();
         watchlistEntriesPanel.repaint();
+    }
+
+    private void displayFriends(List<MovieShedUser> friends) {
+        friendsEntriesPanel.removeAll();
+
+        for (MovieShedUser friend : friends) {
+            JPanel friendComponent = createFriendComponent(friend);
+            friendsEntriesPanel.add(friendComponent);
+            friendsEntriesPanel.add(Box.createRigidArea(new Dimension(0,10)));
+        }
+
+        friendsEntriesPanel.revalidate();
+        friendsEntriesPanel.repaint();
     }
 
     private JPanel createMovieComponent(Movie movie) {
@@ -167,6 +214,22 @@ public class ProfilePanel extends JPanel {
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
         panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        return panel;
+    }
+
+    private JPanel createFriendComponent(MovieShedUser friend) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.BLACK);
+        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        panel.setPreferredSize(new Dimension(200, 50));
+
+        JLabel friendNameLabel = new JLabel(friend.getUserName());
+        friendNameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        friendNameLabel.setForeground(Color.WHITE);
+        friendNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+        panel.add(friendNameLabel, BorderLayout.WEST);
 
         return panel;
     }

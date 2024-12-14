@@ -1,5 +1,7 @@
 package com.movieshed.gui;
 
+import com.movieshed.gui.activity.ActivityPanel;
+import com.movieshed.gui.friends.FriendsPanel;
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.gui.profile.MovieDiaryPanel;
 import com.movieshed.gui.profile.ProfilePanel;
@@ -39,6 +41,12 @@ public class MainFrame extends JFrame {
     @Autowired
     private ProfilePanel profilePanel;
 
+    @Autowired
+    private ActivityPanel activityPanel;
+
+    @Autowired
+    private FriendsPanel friendsPanel;
+
     public MainFrame() {
         setTitle("Movie Shed");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,6 +69,8 @@ public class MainFrame extends JFrame {
         contentArea.add(profilePanel, "profilePanel");
         contentArea.add(movieDiaryPanel, "movieDiaryPanel");
         contentArea.add(movieInfoPanel, "movieInfoPanel");
+        contentArea.add(activityPanel, "activityPanel");
+        contentArea.add(friendsPanel, "friendsPanel");
 
         registerPanel.setOnRegisterSuccess(this::onRegisterSuccess);
 
@@ -103,6 +113,12 @@ public class MainFrame extends JFrame {
         friendsButton.setFocusable(Boolean.FALSE);
         friendsButton.addActionListener(e -> showFriendsPanel());
 
+        JButton activityButton = new JButton("Activity");
+        activityButton.setBackground(new Color(128, 128, 128));
+        activityButton.setForeground(Color.WHITE);
+        activityButton.setFocusable(Boolean.FALSE);
+        activityButton.addActionListener(e -> showActivityPanel());
+
         JButton logoutButton = new JButton("Logout");
         logoutButton.setBackground(new Color(128, 128, 128));
         logoutButton.setForeground(Color.WHITE);
@@ -113,6 +129,8 @@ public class MainFrame extends JFrame {
         toolbarPanel.add(searchButton);
         toolbarPanel.add(profileButton);
         toolbarPanel.add(diaryButton);
+        toolbarPanel.add(activityButton);
+        toolbarPanel.add(friendsButton);
         toolbarPanel.add(logoutButton);
 
         return toolbarPanel;
@@ -135,6 +153,7 @@ public class MainFrame extends JFrame {
 
     public void showProfilePanel() {
         profilePanel.loadWatchlist();
+        profilePanel.loadFriends();
         cardLayout.show(contentArea, "profilePanel");
     }
 
@@ -148,7 +167,15 @@ public class MainFrame extends JFrame {
         cardLayout.show(contentArea, "movieInfoPanel");
     }
 
-    public void showFriendsPanel() {}
+    public void showFriendsPanel() {
+        friendsPanel.loadUsers();
+        cardLayout.show(contentArea, "friendsPanel");
+    }
+
+    public void showActivityPanel() {
+        activityPanel.loadActivities();
+        cardLayout.show(contentArea, "activityPanel");
+    }
 
     public void showRegisterPanel() {
         cardLayout.show(contentArea, "registerPanel");

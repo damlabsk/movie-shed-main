@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.engine.internal.Cascade;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -41,5 +38,7 @@ public class MovieShedUser extends EntityBase {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "movieShedUser")
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movieShedUser")
+    private List<Activity> activities = new ArrayList<>();
 }
 
