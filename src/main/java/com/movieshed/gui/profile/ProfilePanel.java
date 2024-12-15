@@ -91,7 +91,7 @@ public class ProfilePanel extends JPanel {
 
     public void loadWatchlist() {
         MovieShedUser currentUser = UserContext.getUser();
-        userNameLabel.setText("<html><span style='color:red;'>Welcome: </span>" + currentUser.getUserName() + "</html>");
+        userNameLabel.setText("<html><span style='color:red;'>Welcome! </span>" + currentUser.getUserName() + "</html>");
         List<Movie> userMovies = movieService.findMoviesByUserId(currentUser.getId());
         displayWatchlistMovies(userMovies);
     }

@@ -72,9 +72,16 @@ public class MovieInfoPanel extends JPanel {
         addMovieButton.setBackground(new Color(139, 0, 0));
         addMovieButton.addActionListener(e -> {
             MovieShedUser user = UserContext.getUser();
-            Movie movie = movieService.addMovieToUser(user.getId(), currentMovieDto.getTitle(), "asdf", currentMovieDto.getYear(), currentMovieDto.getPoster());
-            activityService.addMovieActivity(user.getId(), movie.getId(), user.getUserName() + " added " + movie.getTitle() +" to their watchlist");
-            JOptionPane.showMessageDialog(this, titleLabel.getText() + " added to WatchList!");
+            Movie existingMovie = movieService.findMovieByUserIdAndTitle(user.getId(), currentMovieDto.getTitle());
+            if (existingMovie != null) {
+                JOptionPane.showMessageDialog(this, "This movie is already in your Watchlist!", "Duplicate Movie", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Movie movie = movieService.addMovieToUser(user.getId(), currentMovieDto.getTitle(), "asdf", currentMovieDto.getYear(), currentMovieDto.getPoster());
+                activityService.addMovieActivity(user.getId(), movie.getId(), user.getUserName() + " added " + movie.getTitle() + " to their watchlist");
+                JOptionPane.showMessageDialog(this, movie.getTitle() + " added to Watchlist!");
+                addMovieButton.setText("Added to Watchlist");
+                addMovieButton.setEnabled(false);
+            }
         });
 
         infoPanel = new JPanel();
