@@ -54,7 +54,7 @@ public class MovieDiaryPanel extends JPanel {
 
     public void loadWatchedMovies() {
         MovieShedUser user = UserContext.getUser();
-        userNameLabel.setText("Welcome: " + user.getUserName());
+        userNameLabel.setText(user.getUserName() + "'s Movie Diary");
         List<Movie> watchedMovies = movieService.findWatchedMoviesByUserId(user.getId());
 
         displayWatchedMovies(watchedMovies);

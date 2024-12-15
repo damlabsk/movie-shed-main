@@ -39,12 +39,11 @@ public class ProfilePanel extends JPanel {
         JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         userPanel.setBackground(Color.BLACK);
 
-        if(UserContext.getUser() != null) {
-            userNameLabel.setText("Welcome: " + UserContext.getUser().getUserName());
-            userNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
-            userNameLabel.setForeground(Color.WHITE);
-            userPanel.add(userNameLabel);
-        }
+        userNameLabel = new JLabel();
+        userNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        userNameLabel.setForeground(Color.WHITE);
+
+        userPanel.add(userNameLabel);
         topPanel.add(userPanel, BorderLayout.WEST);
 
         JLabel watchlistLabel = new JLabel("Watchlist");
@@ -92,6 +91,7 @@ public class ProfilePanel extends JPanel {
 
     public void loadWatchlist() {
         MovieShedUser currentUser = UserContext.getUser();
+        userNameLabel.setText("Welcome: " + currentUser.getUserName());
         List<Movie> userMovies = movieService.findMoviesByUserId(currentUser.getId());
         displayWatchlistMovies(userMovies);
     }
