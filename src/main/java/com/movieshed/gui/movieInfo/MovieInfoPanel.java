@@ -75,6 +75,8 @@ public class MovieInfoPanel extends JPanel {
             Movie existingMovie = movieService.findMovieByUserIdAndTitle(user.getId(), currentMovieDto.getTitle());
             if (existingMovie != null) {
                 JOptionPane.showMessageDialog(this, "This movie is already in your Watchlist!", "Duplicate Movie", JOptionPane.WARNING_MESSAGE);
+                addMovieButton.setText("Added to Watchlist");
+                addMovieButton.setEnabled(false);
             } else {
                 Movie movie = movieService.addMovieToUser(user.getId(), currentMovieDto.getTitle(), "asdf", currentMovieDto.getYear(), currentMovieDto.getPoster());
                 activityService.addMovieActivity(user.getId(), movie.getId(), user.getUserName() + " added " + movie.getTitle() + " to their watchlist");
@@ -126,6 +128,25 @@ public class MovieInfoPanel extends JPanel {
         addCommentButton.addActionListener(e -> addComment());
     }
 
+    private void handleAddToWatchListButtonClick() {
+        MovieShedUser user = UserContext.getUser();
+        Movie existingMovie = movieService.findMovieByUserIdAndTitle(user.getId(), currentMovieDto.getTitle());
+
+        if (existingMovie != null) {
+            JOptionPane.showMessageDialog(this, "This movie is already in your Watchlist!", "Duplicate Movie", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Movie movie = movieService.addMovieToUser(user.getId(), currentMovieDto.getTitle(), "asdf", currentMovieDto.getYear(), currentMovieDto.getPoster());
+            JOptionPane.showMessageDialog(this, movie.getTitle() + " added to Watchlist!");
+            addMovieButton.setText("Added to Watchlist");
+            addMovieButton.setEnabled(false);
+        }
+    }
+
+    public void resetAddMovieButton() {
+        addMovieButton.setText("+ Add to WatchList");
+        addMovieButton.setEnabled(true);
+    }
+
     public void displayMovieInfo(MovieDto movieDto) {
         currentMovieDto = movieDto;
         titleLabel.setText(movieDto.getTitle());
@@ -147,6 +168,16 @@ public class MovieInfoPanel extends JPanel {
         }
 
         loadComments(movieDto.getTitle());
+
+        MovieShedUser user = UserContext.getUser();
+        Movie existingMovie = movieService.findMovieByUserIdAndTitle(user.getId(), movieDto.getTitle());
+        if (existingMovie != null) {
+            addMovieButton.setText("Added to Watchlist");
+            addMovieButton.setEnabled(false);
+        } else {
+            addMovieButton.setText("+ Add to WatchList");
+            addMovieButton.setEnabled(true);
+        }
     }
 
     private void loadComments(String movieTitle) {

@@ -1,6 +1,7 @@
 package com.movieshed.gui.register;
 
 import com.movieshed.UserContext;
+import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.MovieShedUser;
 import com.movieshed.service.MovieShedUserService;
 import lombok.Setter;
@@ -28,6 +29,9 @@ public class RegisterPanel extends JPanel {
 
     @Autowired
     private MovieShedUserService userService;
+
+    @Autowired
+    private MovieInfoPanel moviePanel;
 
     public RegisterPanel() {
         this.setLayout(null);
@@ -98,6 +102,8 @@ public class RegisterPanel extends JPanel {
         try {
             MovieShedUser user = userService.createMovieShedUser(userName, password, email);
             UserContext.setUser(user);
+
+            moviePanel.resetAddMovieButton();
 
             if (onRegisterSuccess != null) {
                 onRegisterSuccess.run();
