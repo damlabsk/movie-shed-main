@@ -1,14 +1,12 @@
 package com.movieshed.gui.profile;
 
 import com.movieshed.UserContext;
-import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.model.Movie;
 import com.movieshed.model.MovieShedUser;
 import com.movieshed.service.FriendService;
 import com.movieshed.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +19,6 @@ import java.util.List;
 public class ProfilePanel extends JPanel {
 
     private JLabel userNameLabel;
-    private RegisterPanel registerPanel;
 
     @Autowired
     private MovieService movieService;
@@ -32,8 +29,7 @@ public class ProfilePanel extends JPanel {
     private JPanel watchlistEntriesPanel;
     private JPanel friendsEntriesPanel;
 
-    public ProfilePanel(RegisterPanel registerPanel) {
-        this.registerPanel = registerPanel;
+    public ProfilePanel() {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
@@ -43,47 +39,13 @@ public class ProfilePanel extends JPanel {
         JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         userPanel.setBackground(Color.BLACK);
 
-        userNameLabel = new JLabel(getCurrentUserName());
-        userNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        userNameLabel.setForeground(Color.WHITE);
-
-        JButton movieDiaryButton = new JButton("Movie Diary");
-        movieDiaryButton.setFont(new Font("Arial", Font.BOLD, 14));
-        movieDiaryButton.setBackground(Color.WHITE);
-        movieDiaryButton.setForeground(Color.BLACK);
-
-        userPanel.add(userNameLabel);
-        userPanel.add(movieDiaryButton);
-
-        JPanel addFriendsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        addFriendsPanel.setBackground(Color.BLACK);
-
-        JTextField addFriendsField = new JTextField(15);
-        addFriendsField.setFont(new Font("Arial", Font.PLAIN, 14));
-        addFriendsField.setBackground(Color.BLACK);
-        addFriendsField.setForeground(Color.WHITE);
-
-        JButton addFriendsButton = new JButton("Add friends");
-        addFriendsButton.setFont(new Font("Arial", Font.BOLD, 14));
-        addFriendsButton.setBackground(Color.WHITE);
-        addFriendsButton.setForeground(Color.BLACK);
-
-        addFriendsPanel.add(addFriendsField);
-        addFriendsPanel.add(addFriendsButton);
-
-        JButton showFriendsActivityButton = new JButton("Show friends activity");
-        showFriendsActivityButton.setFont(new Font("Arial", Font.BOLD, 14));
-        showFriendsActivityButton.setBackground(Color.WHITE);
-        showFriendsActivityButton.setForeground(Color.BLACK);
-
-        JPanel controlsPanel = new JPanel(new BorderLayout());
-        controlsPanel.setBackground(Color.BLACK);
-
-        controlsPanel.add(addFriendsPanel, BorderLayout.NORTH);
-        controlsPanel.add(showFriendsActivityButton, BorderLayout.SOUTH);
-
+        if(UserContext.getUser() != null) {
+            userNameLabel.setText("Welcome: " + UserContext.getUser().getUserName());
+            userNameLabel.setFont(new Font("Arial", Font.BOLD, 18));
+            userNameLabel.setForeground(Color.WHITE);
+            userPanel.add(userNameLabel);
+        }
         topPanel.add(userPanel, BorderLayout.WEST);
-        topPanel.add(controlsPanel, BorderLayout.EAST);
 
         JLabel watchlistLabel = new JLabel("Watchlist");
         watchlistLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -126,10 +88,6 @@ public class ProfilePanel extends JPanel {
 
         add(topPanel, BorderLayout.NORTH);
         add(mainCenterPanel, BorderLayout.CENTER);
-    }
-
-    private String getCurrentUserName() {
-        return registerPanel.getUserName();
     }
 
     public void loadWatchlist() {

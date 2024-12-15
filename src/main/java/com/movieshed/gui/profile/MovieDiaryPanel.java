@@ -32,7 +32,7 @@ public class MovieDiaryPanel extends JPanel {
     @Autowired
     private MovieService movieService;
 
-    public MovieDiaryPanel(RegisterPanel registerPanel) {
+    public MovieDiaryPanel() {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
