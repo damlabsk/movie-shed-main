@@ -155,12 +155,25 @@ public class ProfilePanel extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
         titleLabel.setForeground(Color.WHITE);
 
-        JButton watchedButton = new JButton("Watched");
+        JButton watchedButton = new JButton("Add to Diary");
         watchedButton.setBackground(Color.WHITE);
         watchedButton.setFocusable(false);
         watchedButton.setForeground(Color.BLACK);
+
+        boolean isWatched = movieService.isMovieWatched(movie.getId());
+
+        if (isWatched) {
+            watchedButton.setText("Watched");
+            watchedButton.setEnabled(false);
+        } else {
+            watchedButton.setText("Add to Diary");
+        }
         watchedButton.addActionListener(e -> {
-            movieService.setMovieStatus(movie.getId(), true);
+            if (!watchedButton.getText().equals("Watched")) {
+                movieService.setMovieStatus(movie.getId(), true);
+                watchedButton.setText("Watched");
+                watchedButton.setEnabled(false);
+            }
         });
 
         JPanel buttonPanel = new JPanel(new GridLayout(1,1));

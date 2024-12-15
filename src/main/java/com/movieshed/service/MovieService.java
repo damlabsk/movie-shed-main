@@ -27,4 +27,6 @@ public interface MovieService {
     Movie findMovieByEmailAndTitle(String email, String title);
 
     List<MovieDto> searchMovieByKey(String key);
+
+    boolean isMovieWatched(UUID movieId);
 }

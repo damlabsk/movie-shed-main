@@ -100,4 +100,9 @@ public class MovieServiceImpl implements MovieService {
         MovieResponse movieResponse = omdbClient.searchMovieGetRequest(key);
         return movieResponse.getSearch();
     }
+    @Override
+    public boolean isMovieWatched(UUID movieId) {
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        return movie != null && movie.isWatched();
+    }
 }

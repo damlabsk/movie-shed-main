@@ -83,9 +83,11 @@ public class FriendsPanel extends JPanel {
         addFriendButton.setBackground(Color.WHITE);
         addFriendButton.setForeground(Color.BLACK);
         addFriendButton.addActionListener(e -> {
-            friendService.addFriend(UserContext.getUser(), user);
-            addFriendButton.setText("Added");
-            addFriendButton.setEnabled(false);
+            if (!addFriendButton.getText().equals("Added")) {
+                friendService.addFriend(UserContext.getUser(), user);
+                addFriendButton.setText("Added");
+                addFriendButton.setEnabled(false);
+            }
         });
 
         panel.add(usernameLabel, BorderLayout.WEST);

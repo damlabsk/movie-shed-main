@@ -156,7 +156,7 @@ public class MovieDiaryPanel extends JPanel {
         createDialog.setSize(400, 300);
 
         JTextArea notesArea = new JTextArea();
-        notesArea.setBackground(Color.DARK_GRAY);
+        notesArea.setBackground(Color.BLACK);
         notesArea.setForeground(Color.WHITE);
         createDialog.add(new JScrollPane(notesArea), BorderLayout.CENTER);
 
