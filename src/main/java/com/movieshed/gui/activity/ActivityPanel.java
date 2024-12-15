@@ -48,7 +48,7 @@ public class ActivityPanel extends JPanel {
         List<MovieShedUser> allUsers = new ArrayList<>();
         MovieShedUser currentUser = UserContext.getUser();
         List<MovieShedUser> friends = currentUser.getFriends();
-        //allUsers.add(currentUser);
+        allUsers.add(currentUser);
         allUsers.addAll(friends);
 
         activityEntriesPanel.removeAll();

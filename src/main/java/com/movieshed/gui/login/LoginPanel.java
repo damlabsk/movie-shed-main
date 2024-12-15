@@ -153,7 +153,7 @@ public class LoginPanel extends JPanel {
             MovieShedUser user = UserContext.getUser();
 
             if (user != null) {
-                UserContext.setUser(user);
+                //UserContext.setUser(user);
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 if (onRegisterSuccess != null) {
