@@ -40,16 +40,16 @@ public class ProfilePanel extends JPanel {
         userPanel.setBackground(Color.BLACK);
 
         userNameLabel = new JLabel();
-        userNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        userNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
         userNameLabel.setForeground(Color.WHITE);
 
         userPanel.add(userNameLabel);
-        topPanel.add(userPanel, BorderLayout.WEST);
+        topPanel.add(userPanel, BorderLayout.CENTER);
 
         JLabel watchlistLabel = new JLabel("Watchlist");
         watchlistLabel.setFont(new Font("Arial", Font.BOLD, 16));
         watchlistLabel.setForeground(Color.WHITE);
-        watchlistLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        watchlistLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         watchlistEntriesPanel = new JPanel(new GridBagLayout());
         watchlistEntriesPanel.setBackground(Color.BLACK);
@@ -65,7 +65,7 @@ public class ProfilePanel extends JPanel {
         JLabel friendsLabel = new JLabel("Friends");
         friendsLabel.setFont(new Font("Arial", Font.BOLD, 16));
         friendsLabel.setForeground(Color.WHITE);
-        friendsLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        friendsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         friendsEntriesPanel = new JPanel();
         friendsEntriesPanel.setLayout(new BoxLayout(friendsEntriesPanel, BoxLayout.Y_AXIS));
@@ -91,7 +91,7 @@ public class ProfilePanel extends JPanel {
 
     public void loadWatchlist() {
         MovieShedUser currentUser = UserContext.getUser();
-        userNameLabel.setText("Welcome: " + currentUser.getUserName());
+        userNameLabel.setText("<html><span style='color:red;'>Welcome: </span>" + currentUser.getUserName() + "</html>");
         List<Movie> userMovies = movieService.findMoviesByUserId(currentUser.getId());
         displayWatchlistMovies(userMovies);
     }

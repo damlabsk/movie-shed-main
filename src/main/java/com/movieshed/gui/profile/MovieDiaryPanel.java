@@ -37,8 +37,8 @@ public class MovieDiaryPanel extends JPanel {
         setBackground(Color.BLACK);
 
         userNameLabel = new JLabel();
-        userNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        userNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         userNameLabel.setForeground(Color.WHITE);
 
         add(userNameLabel, BorderLayout.NORTH);
@@ -54,7 +54,7 @@ public class MovieDiaryPanel extends JPanel {
 
     public void loadWatchedMovies() {
         MovieShedUser user = UserContext.getUser();
-        userNameLabel.setText(user.getUserName() + "'s Movie Diary");
+        userNameLabel.setText("<html><span style='color:white;'>" + user.getUserName() + "'s </span><span style='color:red;'>Movie Diary</span></html>");
         List<Movie> watchedMovies = movieService.findWatchedMoviesByUserId(user.getId());
 
         displayWatchedMovies(watchedMovies);

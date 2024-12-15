@@ -30,10 +30,10 @@ public class FriendsPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
-        JLabel titleLabel = new JLabel("Add Friends");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel titleLabel = new JLabel("<html><span style='color:white;'>Add </span><span style='color:red;'>Friends</span></html>");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         usersListPanel = new JPanel();
         usersListPanel.setLayout(new BoxLayout(usersListPanel, BoxLayout.Y_AXIS));

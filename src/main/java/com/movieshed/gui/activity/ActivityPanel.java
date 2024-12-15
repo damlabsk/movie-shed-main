@@ -28,10 +28,10 @@ public class ActivityPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
 
-        JLabel activityLabel = new JLabel("Activity Feed");
-        activityLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        JLabel activityLabel = new JLabel("<html><span style='color:white;'>Activity </span><span style='color:red;'>Feed</span></html>");
+        activityLabel.setFont(new Font("Arial", Font.BOLD, 20));
         activityLabel.setForeground(Color.WHITE);
-        activityLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        activityLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         activityEntriesPanel = new JPanel();
         activityEntriesPanel.setLayout(new BoxLayout(activityEntriesPanel, BoxLayout.Y_AXIS));
