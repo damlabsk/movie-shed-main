@@ -39,4 +39,10 @@ public class MovieShedUserServiceImpl implements MovieShedUserService {
         return movieShedUserRepository.findMovieShedUserByEmail(email);
     }
 
-}
+    @Override
+    public MovieShedUser validateUser(String username, String password, String email) {
+            return movieShedUserRepository.findByUserNameAndPasswordAndEmail(username, password, email);
+        }
+
+    }
+

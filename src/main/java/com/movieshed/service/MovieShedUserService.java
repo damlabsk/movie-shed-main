@@ -12,4 +12,6 @@ public interface MovieShedUserService {
     MovieShedUser findMovieShedUserByUserName(String userName);
 
     MovieShedUser findMovieShedUserByEmail(String email);
+
+    MovieShedUser validateUser(String username, String password, String email);
 }

@@ -1,6 +1,9 @@
-package com.movieshed.gui.register;
+package com.movieshed.gui.login;
 
+import com.movieshed.UserContext;
 import com.movieshed.gui.MainFrame;
+import com.movieshed.gui.register.RegisterPanel;
+import com.movieshed.model.MovieShedUser;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -9,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.service.MovieShedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class LoginPanel extends JPanel {
     private MovieInfoPanel moviePanel;
 
     @Setter
-    private Runnable onLoginSuccess;
+    private Runnable onRegisterSuccess;
 
     @Lazy
     @Autowired
@@ -114,6 +116,7 @@ public class LoginPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 redirectToRegister();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 createAccountLabel.setForeground(Color.YELLOW);
@@ -129,8 +132,11 @@ public class LoginPanel extends JPanel {
     }
 
     private void redirectToRegister() {
-        RegisterPanel registerPanel = new RegisterPanel();
-        registerPanel.setVisible(true);
+        if (mainFrame != null) {
+            mainFrame.showRegisterPanel();
+        } else {
+            log.error("MainFrame is not set. Cannot redirect to RegisterPanel.");
+        }
     }
 
     public void handleLoginButtonClick() {
@@ -138,10 +144,29 @@ public class LoginPanel extends JPanel {
         String password = new String(passwordField.getPassword()).trim();
         String email = emailField.getText().trim();
 
-        //Buradan sonrasında spring hatası veriyor daha çözemedim ne olduğunu o yüzden main frame'e eklemedim
+        if (userName.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        try {
+            MovieShedUser user = UserContext.getUser();
+
+            if (user != null) {
+                UserContext.setUser(user);
+                JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                if (onRegisterSuccess != null) {
+                    onRegisterSuccess.run();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            log.error("Failed to log in user", ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Failed to log in. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
     private JLabel createStyledLabel(String text) {
         JLabel label = new JLabel(text);
         label.setForeground(Color.WHITE);

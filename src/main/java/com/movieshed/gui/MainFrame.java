@@ -5,6 +5,7 @@ import com.movieshed.gui.friends.FriendsPanel;
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.gui.profile.MovieDiaryPanel;
 import com.movieshed.gui.profile.ProfilePanel;
+import com.movieshed.gui.login.LoginPanel;
 import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.gui.search.SearchPanel;
 import com.movieshed.model.dto.MovieDto;
@@ -47,6 +48,9 @@ public class MainFrame extends JFrame {
     @Autowired
     private FriendsPanel friendsPanel;
 
+    @Autowired
+    private LoginPanel loginPanel;
+
     public MainFrame() {
         setTitle("Movie Shed");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,6 +67,7 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         contentArea = new JPanel(cardLayout);
 
+        contentArea.add(loginPanel, "loginPanel");
         contentArea.add(registerPanel, "registerPanel");
         contentArea.add(dashboardPanel, "dashboardPanel");
         contentArea.add(searchPanel, "searchPanel");
@@ -72,7 +77,7 @@ public class MainFrame extends JFrame {
         contentArea.add(activityPanel, "activityPanel");
         contentArea.add(friendsPanel, "friendsPanel");
 
-        registerPanel.setOnRegisterSuccess(this::onRegisterSuccess);
+        loginPanel.setOnRegisterSuccess(this::onRegisterSuccess);
 
         contentPane.add(contentArea, BorderLayout.CENTER);
 
@@ -185,8 +190,11 @@ public class MainFrame extends JFrame {
         contentPane.repaint();
     }
 
+    public void showLoginPanel() {cardLayout.show(contentArea, "loginPanel");}
+
     private void logout() {
+        loginPanel.clearFields();
         registerPanel.clearFields();
-        showRegisterPanel();
+        showLoginPanel();
     }
 }

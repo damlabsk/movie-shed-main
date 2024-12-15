@@ -17,6 +17,8 @@ public interface MovieShedUserRepository extends JpaRepository<MovieShedUser, UU
 
     MovieShedUser findMovieShedUserById(UUID id);
 
+    MovieShedUser findByUserNameAndPasswordAndEmail(String userName, String password, String email);
+
     @Query("SELECT u.friends FROM MovieShedUser u WHERE u.userName = :movieShedUserUserName")
     List<MovieShedUser> findFriendsByMovieShedUserUserName(@Param("movieShedUserUserName") String movieShedUserUserName);
 

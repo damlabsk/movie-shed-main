@@ -1,12 +1,14 @@
 package com.movieshed.gui.register;
 
 import com.movieshed.UserContext;
+import com.movieshed.gui.MainFrame;
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.MovieShedUser;
 import com.movieshed.service.MovieShedUserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -32,6 +34,10 @@ public class RegisterPanel extends JPanel {
 
     @Autowired
     private MovieInfoPanel moviePanel;
+
+    @Lazy
+    @Autowired
+    private MainFrame mainFrame;
 
     public RegisterPanel() {
         this.setLayout(null);
@@ -105,9 +111,10 @@ public class RegisterPanel extends JPanel {
 
             moviePanel.resetAddMovieButton();
 
-            if (onRegisterSuccess != null) {
-                onRegisterSuccess.run();
+            if (mainFrame != null) {
+                mainFrame.showLoginPanel();
             }
+
         } catch (Exception ex) {
             log.error("Failed to register user", ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, "Failed to register. Please try again", "Error", JOptionPane.ERROR_MESSAGE);
