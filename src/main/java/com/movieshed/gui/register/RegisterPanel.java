@@ -51,7 +51,7 @@ public class RegisterPanel extends JPanel {
         ms.setBounds(startX, startY - 100, formWidth, 34);
         this.add(ms);
 
-        JLabel titleLabel = new JLabel("LOG IN");
+        JLabel titleLabel = new JLabel("REGISTER");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -110,7 +110,7 @@ public class RegisterPanel extends JPanel {
             }
         } catch (Exception ex) {
             log.error("Failed to register user", ex.getMessage(), ex);
-            JOptionPane.showMessageDialog(this, "Failed to log in. Please try again", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to register. Please try again", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
