@@ -44,7 +44,7 @@ public class MovieInfoPanel extends JPanel {
 
     @Autowired
     private ProfilePanel profilePanel;
-
+    private JTextArea descriptionTextArea;
     private JTextArea commentTextArea;
     private JButton addCommentButton;
 
@@ -64,6 +64,18 @@ public class MovieInfoPanel extends JPanel {
         yearLabel = new JLabel();
         yearLabel.setFont(new Font("Arial", Font.BOLD, 24));
         yearLabel.setForeground(Color.WHITE);
+
+        descriptionTextArea = new JTextArea();
+        descriptionTextArea.setLineWrap(true);
+        descriptionTextArea.setWrapStyleWord(true);
+        descriptionTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        descriptionTextArea.setForeground(Color.WHITE);
+        descriptionTextArea.setBackground(Color.BLACK);
+        descriptionTextArea.setEditable(false);
+        JScrollPane descriptionScrollPane = new JScrollPane(descriptionTextArea);
+        descriptionScrollPane.setBounds(250, 150, 500, 120); // Adjust dimensions as needed
+        descriptionScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(descriptionScrollPane);
 
         addMovieButton = new JButton("+ Add to WatchList");
         addMovieButton.setFont(new Font("Arial", Font.BOLD, 15));
@@ -119,7 +131,7 @@ public class MovieInfoPanel extends JPanel {
 
         addCommentButton = new JButton("Add Comment");
         addCommentButton.setFont(new Font("Arial", Font.BOLD, 15));
-        addCommentButton.setForeground(Color.WHITE);
+        addCommentButton.setForeground(Color.BLACK);
         addCommentButton.setBackground(new Color(139, 0, 0));
         addCommentButton.setFocusable(false);
         addCommentButton.setBounds(630, 560, 120, 40);
@@ -152,6 +164,13 @@ public class MovieInfoPanel extends JPanel {
         titleLabel.setText(movieDto.getTitle());
         yearLabel.setText(" ● " + movieDto.getYear());
 
+        String description = " The movie " + movieDto.getTitle() + " published in " + movieDto.getYear()  + " its type is " + movieDto.getType() + " \n IMDB ID: " + movieDto.getImdbID();
+
+        if (!description.trim().isEmpty()) {
+            descriptionTextArea.setText(description);
+        } else {
+            descriptionTextArea.setText("No description available.");
+        }
         if (movieDto.getPoster() != null && !movieDto.getPoster().equals("N/A")) {
             new Thread(() -> {
                 try {
