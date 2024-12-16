@@ -109,7 +109,7 @@ public class LoginPanel extends JPanel {
         createAccountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         createAccountLabel.setForeground(Color.WHITE);
         createAccountLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        createAccountLabel.setBounds(startX, startY + 170, formWidth, 30);
+        createAccountLabel.setBounds(startX, startY + 230, formWidth, 30);
 
         createAccountLabel.addMouseListener(new MouseAdapter() {
             @Override

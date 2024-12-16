@@ -212,6 +212,7 @@ public class MainFrame extends JFrame {
     private void logout() {
         loginPanel.clearFields();
         registerPanel.clearFields();
+        searchPanel.clearSearchResults();
         showLoginPanel();
     }
 }
