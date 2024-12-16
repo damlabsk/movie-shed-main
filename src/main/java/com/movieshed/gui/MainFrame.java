@@ -1,6 +1,7 @@
 package com.movieshed.gui;
 
 import com.movieshed.gui.activity.ActivityPanel;
+import com.movieshed.gui.chat.ChatPanel;
 import com.movieshed.gui.friends.FriendsPanel;
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.gui.profile.MovieDiaryPanel;
@@ -51,6 +52,9 @@ public class MainFrame extends JFrame {
     @Autowired
     private LoginPanel loginPanel;
 
+    @Autowired
+    private ChatPanel chatPanel;
+
     public MainFrame() {
         setTitle("Movie Shed");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +80,7 @@ public class MainFrame extends JFrame {
         contentArea.add(movieInfoPanel, "movieInfoPanel");
         contentArea.add(activityPanel, "activityPanel");
         contentArea.add(friendsPanel, "friendsPanel");
+        contentArea.add(chatPanel, "chatPanel");
 
         loginPanel.setOnRegisterSuccess(this::onRegisterSuccess);
 
@@ -124,6 +129,12 @@ public class MainFrame extends JFrame {
         activityButton.setFocusable(Boolean.FALSE);
         activityButton.addActionListener(e -> showActivityPanel());
 
+        JButton chatButton = new JButton("Chat");
+        chatButton.setBackground(new Color(128, 128, 128));
+        chatButton.setForeground(Color.WHITE);
+        chatButton.setFocusable(Boolean.FALSE);
+        chatButton.addActionListener(e -> showChatPanel());
+
         JButton logoutButton = new JButton("Logout");
         logoutButton.setBackground(new Color(128, 128, 128));
         logoutButton.setForeground(Color.WHITE);
@@ -136,6 +147,7 @@ public class MainFrame extends JFrame {
         toolbarPanel.add(diaryButton);
         toolbarPanel.add(activityButton);
         toolbarPanel.add(friendsButton);
+        toolbarPanel.add(chatButton);
         toolbarPanel.add(logoutButton);
 
         return toolbarPanel;
@@ -180,6 +192,11 @@ public class MainFrame extends JFrame {
     public void showActivityPanel() {
         activityPanel.loadActivities();
         cardLayout.show(contentArea, "activityPanel");
+    }
+
+    public void showChatPanel() {
+        chatPanel.loadMessages();
+        cardLayout.show(contentArea, "chatPanel");
     }
 
     public void showRegisterPanel() {
