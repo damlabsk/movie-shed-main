@@ -90,43 +90,43 @@ public class MainFrame extends JFrame {
 
         JButton dashboardButton = new JButton("Dashboard");
         dashboardButton.setBackground(new Color(128, 128, 128));
-        dashboardButton.setForeground(Color.WHITE);
+        dashboardButton.setForeground(Color.BLACK);
         dashboardButton.setFocusable(Boolean.FALSE);
         dashboardButton.addActionListener(e -> showDashboardPanel());
 
         JButton searchButton = new JButton("Search");
         searchButton.setBackground(new Color(128, 128, 128));
-        searchButton.setForeground(Color.WHITE);
+        searchButton.setForeground(Color.BLACK);
         searchButton.setFocusable(Boolean.FALSE);
         searchButton.addActionListener(e -> showSearchPanel());
 
         JButton profileButton = new JButton("Profile");
         profileButton.setBackground(new Color(128, 128, 128));
-        profileButton.setForeground(Color.WHITE);
+        profileButton.setForeground(Color.BLACK);
         profileButton.setFocusable(Boolean.FALSE);
         profileButton.addActionListener(e -> showProfilePanel());
 
         JButton diaryButton = new JButton("Diary");
         diaryButton.setBackground(new Color(128, 128, 128));
-        diaryButton.setForeground(Color.WHITE);
+        diaryButton.setForeground(Color.BLACK);
         diaryButton.setFocusable(Boolean.FALSE);
         diaryButton.addActionListener(e -> showDiaryPanel());
 
         JButton friendsButton = new JButton("Friends");
         friendsButton.setBackground(new Color(128, 128, 128));
-        friendsButton.setForeground(Color.WHITE);
+        friendsButton.setForeground(Color.BLACK);
         friendsButton.setFocusable(Boolean.FALSE);
         friendsButton.addActionListener(e -> showFriendsPanel());
 
         JButton activityButton = new JButton("Activity");
         activityButton.setBackground(new Color(128, 128, 128));
-        activityButton.setForeground(Color.WHITE);
+        activityButton.setForeground(Color.BLACK);
         activityButton.setFocusable(Boolean.FALSE);
         activityButton.addActionListener(e -> showActivityPanel());
 
         JButton logoutButton = new JButton("Logout");
         logoutButton.setBackground(new Color(128, 128, 128));
-        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setForeground(Color.BLACK);
         logoutButton.setFocusable(Boolean.FALSE);
         logoutButton.addActionListener(e -> logout());
 
