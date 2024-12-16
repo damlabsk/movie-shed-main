@@ -2,19 +2,19 @@ package com.movieshed.gui.login;
 
 import com.movieshed.UserContext;
 import com.movieshed.gui.MainFrame;
-import com.movieshed.gui.register.RegisterPanel;
+import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.MovieShedUser;
+import com.movieshed.service.MovieShedUserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import com.movieshed.gui.movieInfo.MovieInfoPanel;
-import com.movieshed.service.MovieShedUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
 @Slf4j
@@ -150,10 +150,10 @@ public class LoginPanel extends JPanel {
         }
 
         try {
-            MovieShedUser user = UserContext.getUser();
+            MovieShedUser user = userService.validateUser(userName, password, email);
 
             if (user != null) {
-                //UserContext.setUser(user);
+                UserContext.setUser(user);
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 if (onRegisterSuccess != null) {
