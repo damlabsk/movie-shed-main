@@ -184,4 +184,11 @@ public class SearchPanel extends JPanel {
         mainFrame.showMovieInfoPanel(movieDto);
 
     }
+
+    public void clearSearchResults() {
+        resultsPanel.removeAll();
+        searchField.setText("");
+        revalidate();
+        repaint();
+    }
 }

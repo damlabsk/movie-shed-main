@@ -6,7 +6,6 @@ import com.movieshed.service.MovieShedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,8 +40,10 @@ public class MovieShedUserServiceImpl implements MovieShedUserService {
 
     @Override
     public MovieShedUser validateUser(String username, String password, String email) {
-            return movieShedUserRepository.findByUserNameAndPasswordAndEmail(username, password, email);
-        }
-
+            MovieShedUser user = movieShedUserRepository.findMovieShedUserByUserName(username);
+            if(user != null && user.getPassword().equals(password) && user.getEmail().equals(email)){
+                return user;
+            }
+            return null;
     }
-
+}

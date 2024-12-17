@@ -1,6 +1,5 @@
 package com.movieshed.gui.register;
 
-import com.movieshed.UserContext;
 import com.movieshed.gui.MainFrame;
 import com.movieshed.gui.movieInfo.MovieInfoPanel;
 import com.movieshed.model.MovieShedUser;
@@ -107,9 +106,6 @@ public class RegisterPanel extends JPanel {
 
         try {
             MovieShedUser user = userService.createMovieShedUser(userName, password, email);
-            UserContext.setUser(user);
-
-            moviePanel.resetAddMovieButton();
 
             if (mainFrame != null) {
                 mainFrame.showLoginPanel();

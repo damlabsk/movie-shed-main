@@ -47,7 +47,7 @@ public class ProfilePanel extends JPanel {
         topPanel.add(userPanel, BorderLayout.CENTER);
 
         JLabel watchlistLabel = new JLabel("Watchlist");
-        watchlistLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        watchlistLabel.setFont(new Font("Arial", Font.BOLD, 20));
         watchlistLabel.setForeground(Color.WHITE);
         watchlistLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
