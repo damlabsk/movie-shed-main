@@ -131,7 +131,7 @@ public class MainFrame extends JFrame {
 
         JButton chatButton = new JButton("Chat");
         chatButton.setBackground(new Color(128, 128, 128));
-        chatButton.setForeground(Color.WHITE);
+        chatButton.setForeground(Color.BLACK);
         chatButton.setFocusable(Boolean.FALSE);
         chatButton.addActionListener(e -> showChatPanel());
 

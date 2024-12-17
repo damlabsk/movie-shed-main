@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +52,32 @@ public class SearchPanel extends JPanel {
         searchField.setPreferredSize(new Dimension(400, 25));
         searchField.setBackground(Color.WHITE);
         searchField.setForeground(Color.BLACK);
+
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                    String movieTitle = searchField.getText();
+
+                    if(movieTitle.isEmpty()) {
+                        return;
+                    }
+
+                    MovieResponse movieResponse = omdbClient.searchMovieGetRequest(movieTitle);
+
+                    if (movieResponse != null && movieResponse.getSearch() != null) {
+                        List<MovieDto> movieDtos = movieResponse.getSearch();
+                        displaySearchResults(movieDtos);
+                    } else {
+                        resultsPanel.removeAll();
+                        resultsPanel.add(new JLabel("No results found."));
+                        resultsPanel.revalidate();
+                        resultsPanel.repaint();
+                    }
+
+                }
+            }
+        });
 
         JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
         inputPanel.setBackground(Color.BLACK);
