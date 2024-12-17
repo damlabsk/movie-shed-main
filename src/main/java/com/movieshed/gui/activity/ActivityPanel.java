@@ -13,7 +13,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -96,7 +98,12 @@ public class ActivityPanel extends JPanel {
         descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         descriptionLabel.setForeground(Color.WHITE);
 
-        JLabel createdAtLabel = new JLabel(activity.getCreatedAt().toString());
+        Date createdAtDate = Date.from(activity.getCreatedAt());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        String formattedTimestamp = dateFormat.format(createdAtDate);
+
+        JLabel createdAtLabel = new JLabel(formattedTimestamp);
         createdAtLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         createdAtLabel.setForeground(Color.LIGHT_GRAY);
 

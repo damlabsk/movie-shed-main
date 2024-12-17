@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -35,9 +37,6 @@ public class MovieInfoPanel extends JPanel {
 
     @Autowired
     private ActivityService activityService;
-
-    @Autowired
-    private MovieDiaryService movieDiaryService;
 
     @Autowired
     private MovieService movieService;
@@ -198,7 +197,12 @@ public class MovieInfoPanel extends JPanel {
                         BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY),
                         BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-                JLabel timestampLabel = new JLabel(Instant.now().toString());
+                Date createdAtDate = Date.from(activityService.getActivitiesByUserId(comment.getMovieShedUser().getId()).getLast().getCreatedAt());
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                String formattedTimestamp = dateFormat.format(createdAtDate);
+
+                JLabel timestampLabel = new JLabel(formattedTimestamp);
                 timestampLabel.setFont(new Font("Arial", Font.PLAIN, 12));
                 timestampLabel.setForeground(Color.LIGHT_GRAY);
 
