@@ -19,9 +19,11 @@ import java.awt.*;
 public class RegisterPanel extends JPanel {
     private JLabel userNameLabel;
     private JLabel passwordLabel;
+    private JLabel cPasswordLabel;
     private JLabel emailLabel;
     public JTextField userNameField;
     private JPasswordField passwordField;
+    private JPasswordField cPasswordField;
     private JTextField emailField;
     private JButton registerButton;
 
@@ -77,15 +79,22 @@ public class RegisterPanel extends JPanel {
         this.add(passwordLabel);
         this.add(passwordField);
 
+        cPasswordLabel = createStyledLabel("Confirm Password:");
+        cPasswordLabel.setBounds(startX, startY + 130, formWidth, 20);
+        cPasswordField = new JPasswordField();
+        cPasswordField.setBounds(startX, startY + 155, formWidth, 20);
+        this.add(cPasswordLabel);
+        this.add(cPasswordField);
+
         emailLabel = createStyledLabel("Email:");
-        emailLabel.setBounds(startX, startY + 130, formWidth, 20);
+        emailLabel.setBounds(startX, startY + 195, formWidth, 20);
         emailField = new JTextField();
-        emailField.setBounds(startX, startY + 155, formWidth, 20);
+        emailField.setBounds(startX, startY + 220, formWidth, 20);
         this.add(emailLabel);
         this.add(emailField);
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(startX + (formWidth - 100) / 2, startY + 190, 100, 30);
+        registerButton.setBounds(startX + (formWidth - 100) / 2, startY + 255, 100, 30);
         registerButton.setBackground(Color.LIGHT_GRAY);
         registerButton.setFocusPainted(false);
         registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -97,7 +106,13 @@ public class RegisterPanel extends JPanel {
     public void handleRegisterButtonClick() {
         String userName = userNameField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
+        String cPassword = new String(cPasswordField.getPassword()).trim();
         String email = emailField.getText().trim();
+
+        if(!password.equals(cPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (userName.isEmpty() || password.isEmpty() || email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill all the fields", "Error", JOptionPane.ERROR_MESSAGE);
@@ -120,6 +135,7 @@ public class RegisterPanel extends JPanel {
     public void clearFields() {
         userNameField.setText("");
         passwordField.setText("");
+        cPasswordField.setText("");
         emailField.setText("");
     }
 

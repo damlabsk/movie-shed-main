@@ -9,7 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -69,19 +74,30 @@ public class FriendsPanel extends JPanel {
     }
 
     private JPanel createUserComponent(MovieShedUser user) {
-        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.BLACK);
-        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        panel.setPreferredSize(new Dimension(300, 50));
+        panel.setBorder(addPadding(10,10,5,10));
+        panel.setAlignmentX(CENTER_ALIGNMENT);
 
         JLabel usernameLabel = new JLabel(user.getUserName());
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 25));
         usernameLabel.setForeground(Color.WHITE);
-        usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,0,5,10));
+        panel.add(usernameLabel);
+
+
+        JLabel userIdLabel = new JLabel("Mail: " + user.getEmail());
+        userIdLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        userIdLabel.setForeground(Color.WHITE);
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(5,0,5,10));
+        panel.add(userIdLabel);
+
 
         JButton addFriendButton = new JButton("Add Friend");
         addFriendButton.setBackground(Color.WHITE);
         addFriendButton.setForeground(Color.BLACK);
+        addFriendButton.setFocusable(Boolean.FALSE);
         addFriendButton.addActionListener(e -> {
             if (!addFriendButton.getText().equals("Added")) {
                 friendService.addFriend(UserContext.getUser(), user);
@@ -90,9 +106,15 @@ public class FriendsPanel extends JPanel {
             }
         });
 
-        panel.add(usernameLabel, BorderLayout.WEST);
-        panel.add(addFriendButton, BorderLayout.EAST);
+        panel.add(addFriendButton);
 
         return panel;
+    }
+
+    public static Border addPadding(int top, int left, int bottom, int right) {
+        LineBorder lineBorder = new LineBorder(Color.GRAY, 1);
+        EmptyBorder emptyBorder = new EmptyBorder(top, left, bottom, right);
+        Border compoundBorder = new CompoundBorder(lineBorder, emptyBorder);
+        return compoundBorder;
     }
 }

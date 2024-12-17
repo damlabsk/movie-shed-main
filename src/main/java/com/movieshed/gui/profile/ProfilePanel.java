@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -63,7 +67,7 @@ public class ProfilePanel extends JPanel {
         watchlistPanel.add(watchlistScroll, BorderLayout.CENTER);
 
         JLabel friendsLabel = new JLabel("Friends");
-        friendsLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        friendsLabel.setFont(new Font("Arial", Font.BOLD, 20));
         friendsLabel.setForeground(Color.WHITE);
         friendsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -72,18 +76,21 @@ public class ProfilePanel extends JPanel {
         friendsEntriesPanel.setBackground(Color.BLACK);
 
         JScrollPane friendsScroll = new JScrollPane(friendsEntriesPanel);
+        friendsScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         friendsScroll.setBackground(Color.BLACK);
 
-        JPanel friendsPanel = new JPanel(new BorderLayout());
+        JPanel friendsPanel = new JPanel();
+        friendsPanel.setLayout(new BoxLayout(friendsPanel, BoxLayout.Y_AXIS));
+        friendsPanel.setPreferredSize(new Dimension(200, 500));
         friendsPanel.setBackground(Color.BLACK);
-        friendsPanel.add(friendsLabel, BorderLayout.NORTH);
-        friendsPanel.add(friendsScroll, BorderLayout.CENTER);
+        friendsPanel.add(friendsLabel);
+        friendsPanel.add(friendsScroll);
 
         JPanel mainCenterPanel = new JPanel();
-        mainCenterPanel.setLayout(new BorderLayout());
+        mainCenterPanel.setLayout(new BorderLayout(5, 5));
         mainCenterPanel.setBackground(Color.BLACK);
         mainCenterPanel.add(watchlistPanel, BorderLayout.CENTER);
-        mainCenterPanel.add(friendsPanel, BorderLayout.SOUTH);
+        mainCenterPanel.add(friendsPanel, BorderLayout.EAST);
 
         add(topPanel, BorderLayout.NORTH);
         add(mainCenterPanel, BorderLayout.CENTER);
@@ -190,17 +197,17 @@ public class ProfilePanel extends JPanel {
     }
 
     private JPanel createFriendComponent(MovieShedUser friend) {
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
-        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        panel.setPreferredSize(new Dimension(200, 50));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setBorder(new EmptyBorder(5,0,5,0));
 
         JLabel friendNameLabel = new JLabel(friend.getUserName());
-        friendNameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        friendNameLabel.setFont(new Font("Arial", Font.BOLD, 20));
         friendNameLabel.setForeground(Color.WHITE);
         friendNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-        panel.add(friendNameLabel, BorderLayout.WEST);
+        panel.add(friendNameLabel);
 
         return panel;
     }
@@ -231,4 +238,6 @@ public class ProfilePanel extends JPanel {
             }
         }).start();
     }
+
+
 }
