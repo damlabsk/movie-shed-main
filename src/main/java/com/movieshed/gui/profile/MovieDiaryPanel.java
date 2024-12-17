@@ -5,6 +5,7 @@ import com.movieshed.gui.register.RegisterPanel;
 import com.movieshed.model.Movie;
 import com.movieshed.model.MovieDiary;
 import com.movieshed.model.MovieShedUser;
+import com.movieshed.repository.MovieDiaryRepository;
 import com.movieshed.service.MovieDiaryService;
 import com.movieshed.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,9 @@ public class MovieDiaryPanel extends JPanel {
 
     @Autowired
     private MovieService movieService;
+
+    @Autowired
+    private MovieDiaryRepository movieDiaryRepository;
 
     public MovieDiaryPanel() {
         setLayout(new BorderLayout());
@@ -155,8 +159,9 @@ public class MovieDiaryPanel extends JPanel {
         createDialog.setLayout(new BorderLayout());
         createDialog.setSize(400, 300);
 
-        JTextArea notesArea = new JTextArea();
-        notesArea.setBackground(Color.BLACK);
+        MovieDiary existingDiary = movieDiaryService.getMovieDiaryByUserIdAndMovieId(UserContext.getUser().getId(), movie.getId());
+        JTextArea notesArea = new JTextArea(existingDiary != null ? existingDiary.getNotes() : "");
+        notesArea.setBackground(Color.DARK_GRAY);
         notesArea.setForeground(Color.WHITE);
         createDialog.add(new JScrollPane(notesArea), BorderLayout.CENTER);
 
@@ -168,7 +173,12 @@ public class MovieDiaryPanel extends JPanel {
 
         saveButton.addActionListener(ev -> {
             String notes = notesArea.getText();
-            movieDiaryService.addMovieDiary(UserContext.getUser().getId(), movie.getId(), notes);
+            if (existingDiary != null) {
+
+                movieDiaryService.updateMovieDiary(UserContext.getUser().getId(), movie.getId(), notes);
+            } else {
+                movieDiaryService.addMovieDiary(UserContext.getUser().getId(), movie.getId(), notes);
+            }
             createDialog.dispose();
         });
 
@@ -191,7 +201,7 @@ public class MovieDiaryPanel extends JPanel {
 
         JTextArea diaryArea = new JTextArea(movieDiary != null ? movieDiary.getNotes() : "No diary found.");
         diaryArea.setEditable(false);
-        diaryArea.setBackground(Color.BLACK);
+        diaryArea.setBackground(Color.DARK_GRAY);
         diaryArea.setForeground(Color.WHITE);
         showDialog.add(new JScrollPane(diaryArea), BorderLayout.CENTER);
 
@@ -207,4 +217,5 @@ public class MovieDiaryPanel extends JPanel {
         showDialog.setLocationRelativeTo(this);
         showDialog.setVisible(true);
     }
+
 }

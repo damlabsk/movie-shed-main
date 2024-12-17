@@ -1,5 +1,6 @@
 package com.movieshed.impl;
 
+import com.movieshed.UserContext;
 import com.movieshed.model.Movie;
 import com.movieshed.model.MovieDiary;
 import com.movieshed.model.MovieShedUser;
@@ -54,5 +55,16 @@ public class MovieDiaryServiceImpl implements MovieDiaryService {
     @Override
     public MovieDiary getMovieDiaryByUserIdAndMovieId(UUID userId, UUID movieId) {
         return movieDiaryRepository.findByMovieShedUserIdAndMovieId(userId, movieId);
+    }
+
+    @Override
+    public void updateMovieDiary(UUID userId, UUID movieId, String updatedNotes) {
+        MovieDiary existingDiary = movieDiaryRepository.findByMovieShedUserIdAndMovieId(userId, movieId);
+        if (existingDiary != null) {
+            existingDiary.setNotes(updatedNotes);
+            movieDiaryRepository.save(existingDiary);
+        } else {
+            throw new RuntimeException("Diary not found for the given user and movie.");
+        }
     }
 }

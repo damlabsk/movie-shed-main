@@ -13,4 +13,6 @@ public interface MovieDiaryService {
     List<MovieDiary> getMovieDiariesByUserName(String userName);
 
     MovieDiary getMovieDiaryByUserIdAndMovieId(UUID userId, UUID movieId);
+
+    void updateMovieDiary(UUID userId, UUID movieId, String updatedNotes);
 }
