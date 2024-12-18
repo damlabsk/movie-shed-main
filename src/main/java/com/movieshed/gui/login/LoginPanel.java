@@ -44,64 +44,64 @@ public class LoginPanel extends JPanel {
 
     public LoginPanel() {
 
-        int panelWidth = 800;
-        int panelHeight = 600;
-
-        int formWidth = 300;
-        int formHeight = 300;
-        int startX = (panelWidth - formWidth) / 2;
-        int startY = (panelHeight - formHeight) / 2;
-
         this.setBackground(Color.BLACK);
-        this.setLayout(null);
+        this.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel ms = new JLabel("<html><span style='color:white;'>Welcome to movie</span><span style='color:red;'>SHED</span></html>");
         ms.setFont(new Font("Arial", Font.PLAIN, 24));
         ms.setHorizontalAlignment(SwingConstants.CENTER);
-        ms.setBounds(startX, startY - 100, formWidth, 34);
-        this.add(ms);
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(ms, gbc);
 
         JLabel titleLabel = new JLabel("LOG IN");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setBounds(startX, startY - 40, formWidth, 30);
-        this.add(titleLabel);
+        gbc.gridy = 1;
+        this.add(titleLabel, gbc);
 
-        userNameLabel = createStyledLabel("Username");
-        userNameLabel.setBounds(startX, startY, formWidth, 20);
+        userNameLabel = createStyledLabel("Username:");
+        gbc.gridy = 2;
+        this.add(userNameLabel, gbc);
+
         userNameField = new JTextField();
-        userNameField.setBounds(startX, startY + 25, formWidth, 20);
         userNameField.setBackground(Color.WHITE);
         userNameField.setForeground(Color.BLACK);
-        this.add(userNameLabel);
-        this.add(userNameField);
+        gbc.gridy = 3;
+        this.add(userNameField, gbc);
 
         passwordLabel = createStyledLabel("Password:");
-        passwordLabel.setBounds(startX, startY + 65, formWidth, 20);
+        gbc.gridy = 4;
+        this.add(passwordLabel, gbc);
+
         passwordField = new JPasswordField();
-        passwordField.setBounds(startX, startY + 90, formWidth, 20);
         passwordField.setBackground(Color.WHITE);
         passwordField.setForeground(Color.BLACK);
-        this.add(passwordLabel);
-        this.add(passwordField);
+        gbc.gridy = 5;
+        this.add(passwordField, gbc);
 
         emailLabel = createStyledLabel("Email:");
-        emailLabel.setBounds(startX, startY + 130, formWidth, 20);
+        gbc.gridy = 6;
+        this.add(emailLabel, gbc);
+
         emailField = new JTextField();
-        emailField.setBounds(startX, startY + 155, formWidth, 20);
         emailField.setBackground(Color.WHITE);
         emailField.setForeground(Color.BLACK);
-        this.add(emailLabel);
-        this.add(emailField);
+        gbc.gridy = 7;
+        this.add(emailField, gbc);
 
         loginButton = new JButton("LOG IN");
-        loginButton.setBounds(startX + (formWidth - 100) / 2, startY + 190, 100, 30);
         loginButton.setBackground(Color.LIGHT_GRAY);
         loginButton.setForeground(Color.BLACK);
         loginButton.setFocusPainted(false);
         loginButton.setFont(new Font("Arial", Font.PLAIN, 12));
-        this.add(loginButton);
+        gbc.gridy = 8;
+        this.add(loginButton, gbc);
 
         loginButton.addActionListener(e -> handleLoginButtonClick());
 
@@ -109,8 +109,6 @@ public class LoginPanel extends JPanel {
         createAccountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         createAccountLabel.setForeground(Color.WHITE);
         createAccountLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        createAccountLabel.setBounds(startX, startY + 230, formWidth, 30);
-
         createAccountLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -127,8 +125,8 @@ public class LoginPanel extends JPanel {
                 createAccountLabel.setForeground(Color.WHITE);
             }
         });
-
-        this.add(createAccountLabel);
+        gbc.gridy = 9;
+        this.add(createAccountLabel, gbc);
     }
 
     private void redirectToRegister() {

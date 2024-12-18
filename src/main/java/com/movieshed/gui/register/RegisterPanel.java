@@ -41,69 +41,93 @@ public class RegisterPanel extends JPanel {
     private MainFrame mainFrame;
 
     public RegisterPanel() {
-        this.setLayout(null);
-        this.setBackground(Color.BLACK);
+            this.setBackground(Color.BLACK);
+            this.setLayout(new GridBagLayout());
 
-        int panelWidth = 800;
-        int panelHeight = 600;
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(10, 10, 10, 10);
+            gbc.gridx = 0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        int formWidth = 300;
-        int formHeight = 250;
-        int startX = (panelWidth - formWidth) / 2;
-        int startY = (panelHeight - formHeight) / 2;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.CENTER;
 
-        JLabel ms = new JLabel("<html><span style='color:white;'>Welcome to movie</span><span style='color:red;'>SHED</span></html>");
-        ms.setFont(new Font("Arial", Font.PLAIN, 24));
-        ms.setHorizontalAlignment(SwingConstants.CENTER);
-        ms.setBounds(startX, startY - 100, formWidth, 34);
-        this.add(ms);
+            JLabel ms = new JLabel("<html><span style='color:white;'>Join movie</span><span style='color:red;'>SHED</span></html>");
+            ms.setFont(new Font("Arial", Font.PLAIN, 24));
+            ms.setHorizontalAlignment(SwingConstants.CENTER);
+            gbc.gridwidth = 2;
+            this.add(ms, gbc);
 
-        JLabel titleLabel = new JLabel("REGISTER");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setBounds(startX, startY - 40, formWidth, 30);
-        this.add(titleLabel);
+            gbc.gridy++;
+            JLabel titleLabel = new JLabel("REGISTER");
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+            titleLabel.setForeground(Color.WHITE);
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            this.add(titleLabel, gbc);
 
-        userNameLabel = createStyledLabel("Username");
-        userNameLabel.setBounds(startX, startY, formWidth, 20);
-        userNameField = new JTextField();
-        userNameField.setBounds(startX, startY + 25, formWidth, 20);
-        this.add(userNameLabel);
-        this.add(userNameField);
+            gbc.gridwidth = 1;
+            gbc.gridy++;
+            gbc.anchor = GridBagConstraints.WEST;
 
-        passwordLabel = createStyledLabel("Password:");
-        passwordLabel.setBounds(startX, startY + 65, formWidth, 20);
-        passwordField = new JPasswordField();
-        passwordField.setBounds(startX, startY + 90, formWidth, 20);
-        this.add(passwordLabel);
-        this.add(passwordField);
+            JLabel userNameLabel = createStyledLabel("Username:");
+            this.add(userNameLabel, gbc);
 
-        cPasswordLabel = createStyledLabel("Confirm Password:");
-        cPasswordLabel.setBounds(startX, startY + 130, formWidth, 20);
-        cPasswordField = new JPasswordField();
-        cPasswordField.setBounds(startX, startY + 155, formWidth, 20);
-        this.add(cPasswordLabel);
-        this.add(cPasswordField);
+            gbc.gridy++;
+            userNameField = new JTextField(20);
+            userNameField.setBackground(Color.WHITE);
+            userNameField.setForeground(Color.BLACK);
+            gbc.gridwidth = 2;
+            this.add(userNameField, gbc);
 
-        emailLabel = createStyledLabel("Email:");
-        emailLabel.setBounds(startX, startY + 195, formWidth, 20);
-        emailField = new JTextField();
-        emailField.setBounds(startX, startY + 220, formWidth, 20);
-        this.add(emailLabel);
-        this.add(emailField);
+            gbc.gridy++;
+            JLabel passwordLabel = createStyledLabel("Password:");
+            this.add(passwordLabel, gbc);
 
-        registerButton = new JButton("Register");
-        registerButton.setBounds(startX + (formWidth - 100) / 2, startY + 255, 100, 30);
-        registerButton.setBackground(Color.LIGHT_GRAY);
-        registerButton.setFocusPainted(false);
-        registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
-        this.add(registerButton);
+            gbc.gridy++;
+            passwordField = new JPasswordField(20);
+            passwordField.setBackground(Color.WHITE);
+            passwordField.setForeground(Color.BLACK);
+            gbc.gridwidth = 2;
+            this.add(passwordField, gbc);
 
-        registerButton.addActionListener(e -> handleRegisterButtonClick());
-    }
+            gbc.gridy++;
+            JLabel confirmPasswordLabel = createStyledLabel("Confirm Password:");
+            this.add(confirmPasswordLabel, gbc);
 
-    public void handleRegisterButtonClick() {
+            gbc.gridy++;
+            cPasswordField = new JPasswordField(20);
+            cPasswordField.setBackground(Color.WHITE);
+            cPasswordField.setForeground(Color.BLACK);
+            gbc.gridwidth = 2;
+            this.add(cPasswordField, gbc);
+
+            gbc.gridy++;
+            JLabel emailLabel = createStyledLabel("Email:");
+            this.add(emailLabel, gbc);
+
+            gbc.gridy++;
+            emailField = new JTextField(20);
+            emailField.setBackground(Color.WHITE);
+            emailField.setForeground(Color.BLACK);
+            gbc.gridwidth = 2;
+            this.add(emailField, gbc);
+
+            gbc.gridy++;
+            gbc.anchor = GridBagConstraints.CENTER;
+
+            registerButton = new JButton("Register");
+            registerButton.setBackground(Color.LIGHT_GRAY);
+            registerButton.setForeground(Color.BLACK);
+            registerButton.setFocusPainted(false);
+            registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            gbc.gridwidth = 2;
+            this.add(registerButton, gbc);
+
+            registerButton.addActionListener(e -> handleRegisterButtonClick());
+        }
+
+
+        public void handleRegisterButtonClick() {
         String userName = userNameField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
         String cPassword = new String(cPasswordField.getPassword()).trim();
